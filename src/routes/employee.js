@@ -5,15 +5,27 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
+//Load Input validation
+import validateRegisterInput from "../validation/register";
+import validateLoginInput from "../validation/login";
+
 //@route POST employee/register
 //@desc Register employee
 //@access Public
 router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  //Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   req.context.models.employee
     .findOne({ where: { Phone: req.body.Phone } })
     .then(user => {
       if (user) {
-        return res.status(400).json("phone already exists");
+        errors.Phone = "Работник под таким номером уже существует";
+        return res.status(400).json(errors);
       } else {
         const employee = new req.context.models.employee({
           FirstName: req.body.FirstName,
@@ -45,6 +57,13 @@ router.post("/register", (req, res) => {
 //@desc login employee/ Returning JWT Token
 //@access Public
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  //Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const password = req.body.Password;
 
   //Find user by email
@@ -52,7 +71,8 @@ router.post("/login", (req, res) => {
     .findOne({ where: { Phone: req.body.Phone } })
     .then(user => {
       if (!user) {
-        return res.status(400).json("employee not found");
+        errors.Phone = "Работник не найден";
+        return res.status(400).json(errors);
       }
 
       //Check password
@@ -82,7 +102,8 @@ router.post("/login", (req, res) => {
             }
           );
         } else {
-          return res.status(400).json("Password incorrect");
+          errors.Password = "Неверный пароль";
+          return res.status(400).json(errors);
         }
       });
     });

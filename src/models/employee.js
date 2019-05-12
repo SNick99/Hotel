@@ -33,6 +33,10 @@ let employee = (sequelize, DataTypes) => {
 
           is: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, //XXX-XXX-XXXX
         },
+        unique: {
+          args: true,
+          msg: "Phone address already in use!",
+        },
       },
       Password: {
         type: DataTypes.STRING,

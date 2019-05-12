@@ -1,0 +1,16 @@
+input {
+  margin-top: 5px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 2px solid gray;
+}
+
+.is-invalid {
+  border: 2px solid red;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: 10px;
+  margin-left: 5px;
+}

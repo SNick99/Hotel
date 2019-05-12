@@ -1,0 +1,17 @@
+.nav {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  display: flex;
+  background: #271f1f;
+  color: white;
+}
+.nav > div {
+  padding: 10px 30px 10px 30px;
+  cursor: pointer;
+}
+
+.nav > div:hover {
+  padding: 7px 30px 7px 30px;
+  color: goldenrod;
+  cursor: pointer;
+}

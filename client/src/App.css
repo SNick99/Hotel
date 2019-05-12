@@ -1,0 +1,6 @@
+.App {
+  display: flex;
+  height: 100vh; /* высота секции равна высоте области просмотра */
+  flex-direction: column;
+  justify-content: space-between;
+}
