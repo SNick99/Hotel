@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import "./Register.css";
 import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
 import Input from "../../Layout/Input/Input";
 import classnames from "classnames";
+import { registerEmployee } from "../../../redux/actions/authActions";
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -94,26 +96,11 @@ class Register extends Component {
       SalaryChange: this.state.SalaryChange,
     };
 
-    axios
-      .post("/employee/register", SendData)
-      .then(res =>
-        this.setState({
-          FirstName: "",
-          LastName: "",
-          Password: "",
-          Password2: "",
-          Phone: "",
-          Birthday: "",
-          Adress: "",
-          Position: "",
-          SalaryChange: "",
-          errors: {},
-        })
-      )
-      .catch(err => this.setState({ errors: err.response.data }));
+    this.props.registerEmployee(SendData);
   }
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
+
     return (
       <div className="register">
         <div className="title">
@@ -149,4 +136,20 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerEmployee: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    errors: state.errors,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { registerEmployee }
+)(Register);

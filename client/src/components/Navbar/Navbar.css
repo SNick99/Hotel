@@ -2,16 +2,24 @@
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   display: flex;
+  justify-content: space-between;
+
   background: #271f1f;
-  color: white;
 }
-.nav > div {
-  padding: 10px 30px 10px 30px;
-  cursor: pointer;
+.main-link {
+  display: flex;
 }
 
-.nav > div:hover {
-  padding: 7px 30px 7px 30px;
+.nav .nav-item {
+  padding: 10px 30px 10px 30px;
+  color: white;
+}
+
+.nav .nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+.nav .nav-link:hover {
   color: goldenrod;
-  cursor: pointer;
 }

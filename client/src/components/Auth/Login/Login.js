@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginEmployee } from "../../../redux/actions/authActions";
 import "./Login.css";
 import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
 import Input from "../../Layout/Input/Input";
@@ -10,8 +13,6 @@ class Login extends Component {
     this.state = {
       Phone: "",
       Password: "",
-
-      errors: {},
     };
 
     this.DataInput = [
@@ -24,7 +25,7 @@ class Login extends Component {
       {
         type: "password",
         placeholder: "Пароль",
-        name: "password",
+        name: "Password",
       },
     ];
 
@@ -44,12 +45,24 @@ class Login extends Component {
       Password: this.state.Password,
     };
 
-    axios
-      .post("/employee/login", SendData)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
+    this.props.loginEmployee(SendData);
   }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/employee/current");
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.auth.isAuthenticated !== prevProps.auth.isAuthenticated) {
+      this.props.history.push("/employee/current");
+    }
+  }
+
   render() {
+    const { errors } = this.props;
     return (
       <div className="register">
         <div className="title">
@@ -67,6 +80,13 @@ class Login extends Component {
                 name={item.name}
                 value={this.state.name}
                 onChange={this.onChange}
+                className={classnames({
+                  "is-invalid": errors[item.name],
+                })}
+                invalidFeedback={classnames({
+                  "invalid-feedback": errors[item.name],
+                })}
+                errors={errors}
               />
             );
           })}
@@ -78,4 +98,20 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginEmployee: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    errors: state.errors,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { loginEmployee }
+)(Login);
