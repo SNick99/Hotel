@@ -1,68 +1,81 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutEmployee } from "../../redux/actions/authActions";
-import "./Navbar.css";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutEmployee } from '../../redux/actions/authActions';
+//import "./Navbar.css";
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+const styles = {
+  navbar: {
+    flex: '1 0 auto',
+    justifyContent: 'space-between',
+    background: 'black',
+    color: 'white',
+    minHeight: '12vh'
+  }
+};
 
 class Navbar extends Component {
   clickLogout = () => {
     this.props.logoutEmployee();
   };
   render() {
+    const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
-    const authTrue = (
-      <Link
-        className="nav-link"
-        to="/employee/login"
-        onClick={this.clickLogout}
-      >
-        Выйти
-      </Link>
-    );
-    const authFalse = (
-      <Link className="nav-link" to="/employee/login">
-        Войти
-      </Link>
-    );
     return (
-      <nav className="nav">
-        <div className="main-link">
+      <AppBar position="static" color="inherit">
+        <Toolbar className={classes.navbar}>
           {isAuthenticated ? (
-            <React.Fragment>
-              <div className="nav-item">Главная</div>
-              <div className="nav-item">Блог</div>
-              <div className="nav-item">Форум</div>
-              <div className="nav-item">Контакты</div>
-            </React.Fragment>
+            <>
+              <Button component={Link} to="/" color="default">
+                Главная
+              </Button>
+              <Button component={Link} to="/" color="inherit">
+                Блог
+              </Button>
+              <Button component={Link} to="/" color="inherit">
+                Форум
+              </Button>
+              <Button component={Link} to="/" color="inherit">
+                Контакты
+              </Button>
+            </>
           ) : (
-            <React.Fragment>
-              <div className="nav-item">Гость</div>
-            </React.Fragment>
+            <Typography variant="h6" color="inherit">
+              Гость
+            </Typography>
           )}
-        </div>
-        <div className="auth-link">
-          <div className="nav-item">
-            {isAuthenticated ? authTrue : authFalse}
-          </div>
-        </div>
-      </nav>
+          <Button
+            component={Link}
+            to="/employee/login"
+            color="inherit"
+            onClick={this.clickLogout}
+          >
+            {isAuthenticated ? 'Выйти' : 'Войти'}
+          </Button>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
 Navbar.propTypes = {
   logoutEmployee: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 };
 
 export default connect(
   mapStateToProps,
   { logoutEmployee }
-)(Navbar);
+)(withStyles(styles)(Navbar));

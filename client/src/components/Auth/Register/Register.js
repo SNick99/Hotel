@@ -1,137 +1,123 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import "./Register.css";
-import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
-import Input from "../../Layout/Input/Input";
-import classnames from "classnames";
-import { registerEmployee } from "../../../redux/actions/authActions";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import './Register.css';
+//import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
+//import Input from "../../Layout/Input/Input";
+//import classnames from "classnames";
+import { registerEmployee } from '../../../redux/actions/authActions';
+import { Form, Field } from 'react-final-form';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { renderTextField } from '../../../services/helpers';
+import validateRegisterInput from '../../../validation/register';
+
 class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      FirstName: "",
-      LastName: "",
-      Password: "",
-      Password2: "",
-      Phone: "",
-      Birthday: "",
-      Adress: "",
-      Position: "",
-      SalaryChange: "",
-      errors: {},
+      FirstName: '',
+      LastName: '',
+      Password: '',
+      Password2: '',
+      Phone: '',
+      Birthday: '',
+      Adress: '',
+      Position: '',
+      SalaryChange: '',
+      errors: {}
     };
 
     this.DataInput = [
       {
-        type: "text",
-        placeholder: "Имя",
-        name: "FirstName",
+        type: 'text',
+        label: 'Имя',
+        name: 'FirstName'
       },
       {
-        type: "text",
-        placeholder: "Фамилия",
-        name: "LastName",
+        type: 'text',
+        label: 'Фамилия',
+        name: 'LastName'
       },
       {
-        type: "text",
-        placeholder: "Телефон",
-        name: "Phone",
+        type: 'text',
+        label: 'Телефон',
+        name: 'Phone'
       },
 
       {
-        type: "password",
-        placeholder: "Пароль",
-        name: "Password",
+        type: 'password',
+        label: 'Пароль',
+        name: 'Password'
       },
       {
-        type: "password",
-        placeholder: "Повторить пароль",
-        name: "Password2",
+        type: 'password',
+        label: 'Повторить пароль',
+        name: 'Password2'
       },
       {
-        type: "text",
-        placeholder: "День рождения",
-        name: "Birthday",
+        type: 'text',
+        label: 'День рождения',
+        name: 'Birthday'
       },
       {
-        type: "text",
-        placeholder: "Домашний адрес (Город, улица, дом, квартира)",
-        name: "Adress",
+        type: 'text',
+        label: 'Домашний адрес (Город, улица, дом, квартира)',
+        name: 'Adress'
       },
       {
-        type: "text",
-        placeholder: "Должность сотрудника",
-        name: "Position",
+        type: 'text',
+        label: 'Должность сотрудника',
+        name: 'Position'
       },
       {
-        type: "text",
-        placeholder: "Оклад сотрудника за одну смену",
-        name: "SalaryChange",
-      },
+        type: 'text',
+        label: 'Оклад сотрудника за одну смену',
+        name: 'SalaryChange'
+      }
     ];
 
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+  onSubmit = values => this.props.registerEmployee(values);
 
-  onSubmit(e) {
-    e.preventDefault();
-
-    let SendData = {
-      FirstName: this.state.FirstName,
-      LastName: this.state.LastName,
-      Phone: this.state.Phone,
-      Password: this.state.Password,
-      Password2: this.state.Password2,
-      Birthday: this.state.Birthday,
-      Adress: this.state.Adress,
-      StartDate: new Date(),
-      Position: this.state.Position,
-      SalaryChange: this.state.SalaryChange,
-    };
-
-    this.props.registerEmployee(SendData);
-  }
   render() {
     const { errors } = this.props;
-
+    console.log(errors);
     return (
-      <div className="register">
-        <div className="title">
-          <div className="title-first">Регистрация</div>
-          <div className="title-two">добавить сотрудника в базу данных</div>
-        </div>
-
-        <form>
-          {this.DataInput.map((item, index) => {
-            return (
-              <Input
-                key={`key${index}`}
-                type={item.type}
-                placeholder={item.placeholder}
-                name={item.name}
-                value={this.state[item.name]}
-                onChange={this.onChange}
-                className={classnames({
-                  "is-invalid": errors[item.name],
-                })}
-                invalidFeedback={classnames({
-                  "invalid-feedback": errors[item.name],
-                })}
-                errors={errors}
-              />
-            );
-          })}
-
-          <ButtonSubmit onSubmit={this.onSubmit}>Отправить</ButtonSubmit>
-        </form>
-      </div>
+      <>
+        <br />
+        <Typography variant="h6">Регистрация</Typography>
+        <Form
+          onSubmit={this.onSubmit}
+          validate={validateRegisterInput}
+          render={({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={8}>
+                {this.DataInput.map((item, index) => (
+                  <Grid item xs={12} key={`key${index}`}>
+                    <Field
+                      name={item.name}
+                      component={renderTextField}
+                      label={item.name}
+                      type={item.type}
+                      required
+                      fullWidth
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+              <br />
+              <Button color="primary" variant="outlined" type="submit">
+                Submit
+              </Button>
+            </form>
+          )}
+        />
+      </>
     );
   }
 }
@@ -139,13 +125,13 @@ class Register extends Component {
 Register.propTypes = {
   registerEmployee: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    errors: state.errors,
+    errors: state.errors
   };
 };
 
