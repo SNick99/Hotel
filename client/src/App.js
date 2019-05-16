@@ -14,6 +14,7 @@ import Navbar from './components/Navbar/Navbar';
 import Landing from './components/Landing/Landing';
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
+import EmployesList from './components/EmployesList/EmployesList';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
@@ -58,6 +59,7 @@ function App(props) {
                     <Switch>
                         <Route path={'/employee/register'} exact component={Register} />
                         <Route path={'/employee/login'} exact component={Login} />
+                        <Route path={'/employee/employes'} exact component={EmployesList} />
                     </Switch>
                 </div>
                 <Footer />

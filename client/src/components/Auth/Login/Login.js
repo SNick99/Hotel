@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from '../../../services/helpers';
-import validateLoginInput from '../../../validation/login'
+import validateLoginInput from '../../../validation/login';
 
 class Login extends Component {
   constructor(props) {
@@ -41,10 +41,10 @@ class Login extends Component {
   }
 
   onSubmit = values => {
-    
     const a = this.props.loginEmployee(values);
     console.log(a);
-    return a;};
+    return a;
+  };
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
@@ -61,7 +61,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.props;
-    console.log(errors)
+    console.log(errors);
     return (
       <>
         <br />
