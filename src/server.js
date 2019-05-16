@@ -29,6 +29,7 @@ require("./config/passport")(passport);
 // Routes
 app.use("/employee", routes.employee);
 app.use("/schedule", routes.schedule);
+app.use("/cage", routes.cage);
 
 const PORT = process.env.PORT || 5000;
 

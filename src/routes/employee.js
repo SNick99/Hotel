@@ -129,4 +129,33 @@ router.get(
   }
 );
 
+//@route GET employee/allEmpoloyees
+//@desc Return all Empoloyees
+//@access Private
+router.get(
+  "/allEmployees",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    req.context.models.employee.findAll().then(projects => {
+      res.send(projects);
+    });
+  }
+);
+
+//@route DELETE employee/allEmployees/:id
+//@desc Return all Empoloyees and delete one
+//@access Private
+router.delete(
+  "/allEmployees/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    req.context.models.employee
+      .destroy({ where: { id: req.params.id } })
+      .then(employee => {
+        res.send("Сотрудник удален");
+        console.log(`Сотрудник удален? 1 means yes, 0 means no: ${employee}`);
+      });
+  }
+);
+
 export default router;
