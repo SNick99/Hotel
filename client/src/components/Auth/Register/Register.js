@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from '../../../services/helpers';
-import validateRegisterInput from '../../../validation/register';
+// import validateRegisterInput from '../../../validation/register';
 
 class Register extends Component {
   constructor(props) {
@@ -78,22 +78,17 @@ class Register extends Component {
         name: 'SalaryChange'
       }
     ];
-
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit = values => this.props.registerEmployee(values);
 
   render() {
-    const { errors } = this.props;
-    console.log(errors);
     return (
       <>
         <br />
         <Typography variant="h6">Регистрация</Typography>
         <Form
           onSubmit={this.onSubmit}
-          validate={validateRegisterInput}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={8}>
@@ -124,15 +119,13 @@ class Register extends Component {
 
 Register.propTypes = {
   registerEmployee: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   console.log(state.auth);
   return {
-    auth: state.auth,
-    errors: state.errors
+    auth: state.auth
   };
 };
 

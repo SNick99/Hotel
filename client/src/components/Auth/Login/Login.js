@@ -12,7 +12,11 @@ import Grid from '@material-ui/core/Grid';
 
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from '../../../services/helpers';
+<<<<<<< HEAD
 import validateLoginInput from '../../../validation/login';
+=======
+// import validateLoginInput from '../../../validation/login';
+>>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
 
 class Login extends Component {
   constructor(props) {
@@ -36,15 +40,17 @@ class Login extends Component {
         name: 'Password'
       }
     ];
-
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
+<<<<<<< HEAD
   onSubmit = values => {
     const a = this.props.loginEmployee(values);
     console.log(a);
     return a;
   };
+=======
+  onSubmit = values => this.props.loginEmployee(values);
+>>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
@@ -60,15 +66,18 @@ class Login extends Component {
   }
 
   render() {
+<<<<<<< HEAD
     const { errors } = this.props;
     console.log(errors);
+=======
+>>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
     return (
       <>
         <br />
         <Typography variant="h6">Вход</Typography>
         <Form
           onSubmit={this.onSubmit}
-          validate={validateLoginInput}
+          // validate={validateLoginInput}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={8}>
@@ -99,14 +108,12 @@ class Login extends Component {
 
 Login.propTypes = {
   loginEmployee: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
-    errors: state.errors
+    auth: state.auth
   };
 };
 

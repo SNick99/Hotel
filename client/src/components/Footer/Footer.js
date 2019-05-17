@@ -6,12 +6,11 @@ import Grid from '@material-ui/core/Grid';
 
 const styles = {
   footer: {
-    flex: '1 0 auto',
+    display: 'flex',
     justifyContent: 'center',
-    marginBottom: 0,
     background: 'black',
     color: 'white',
-    minHeight: '12vh'
+    minHeight: 42
   }
 };
 

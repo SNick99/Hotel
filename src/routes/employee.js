@@ -1,4 +1,5 @@
 import { Router } from "express";
+import moment from "moment";
 
 const router = Router();
 const bcrypt = require("bcryptjs");
@@ -27,6 +28,7 @@ router.post("/register", (req, res) => {
         errors.Phone = "Работник под таким номером уже существует";
         return res.status(400).json(errors);
       } else {
+        console.log("#####", req.body);
         const employee = new req.context.models.employee({
           FirstName: req.body.FirstName,
           LastName: req.body.LastName,
@@ -34,7 +36,7 @@ router.post("/register", (req, res) => {
           Password: req.body.Password,
           Birthday: req.body.Birthday,
           Adress: req.body.Adress,
-          StartDate: req.body.StartDate,
+          StartDate: moment().format("YYYY-MM-DD"),
           Position: req.body.Position,
           SalaryChange: req.body.SalaryChange,
         });
@@ -134,10 +136,10 @@ router.get(
 //@access Private
 router.get(
   "/allEmployees",
-  passport.authenticate("jwt", { session: false }),
+
   (req, res) => {
     req.context.models.employee.findAll().then(projects => {
-      res.send(projects);
+      return res.send(projects);
     });
   }
 );
@@ -152,8 +154,10 @@ router.delete(
     req.context.models.employee
       .destroy({ where: { id: req.params.id } })
       .then(employee => {
-        res.send("Сотрудник удален");
         console.log(`Сотрудник удален? 1 means yes, 0 means no: ${employee}`);
+        return req.context.models.employee.findAll().then(projects => {
+          return res.send(projects);
+        });
       });
   }
 );
