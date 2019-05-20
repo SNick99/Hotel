@@ -4,7 +4,10 @@ import authReducer from './reducers/authReducer';
 
 import employeesReducer from './reducers/employeesReducer';
 
+import cageReducer from './reducers/cageReducer';
+
 export default combineReducers({
   auth: authReducer,
-  employees: employeesReducer
+  employees: employeesReducer,
+  cages: cageReducer
 });

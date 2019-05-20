@@ -83,6 +83,7 @@ router.post("/login", (req, res) => {
         if (isMatch) {
           //User matched
           const payload = {
+            id: user.id,
             FirstName: user.FirstName,
             LastName: user.LastName,
             Phone: user.Phone,

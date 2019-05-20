@@ -134,6 +134,11 @@ router.get(
             include: [
               {
                 model: req.context.models.invoiceCage,
+                include: [
+                  {
+                    model: req.context.models.employee,
+                  },
+                ],
               },
             ],
           },
@@ -144,7 +149,6 @@ router.get(
           let data = item.invoiceCage_cages.reduce((sum, current) => {
             return {
               Amount: sum.Amount + current.Amount,
-              UnitPrice: sum.UnitPrice + current.UnitPrice,
             };
           });
           return {
@@ -154,7 +158,6 @@ router.get(
             TypeOfCage: item.TypeOfCage,
             PriceOfDay: item.PriceOfDay,
             Amount: data.Amount,
-            SumUnitPrice: data.UnitPrice,
           };
         });
         return res.send(sendData);
@@ -191,7 +194,6 @@ router.delete(
               let data = item.invoiceCage_cages.reduce((sum, current) => {
                 return {
                   Amount: sum.Amount + current.Amount,
-                  UnitPrice: sum.UnitPrice + current.UnitPrice,
                 };
               });
               return {
@@ -201,7 +203,6 @@ router.delete(
                 TypeOfCage: item.TypeOfCage,
                 PriceOfDay: item.PriceOfDay,
                 Amount: data.Amount,
-                SumUnitPrice: data.UnitPrice,
               };
             });
             return res.send(sendData);

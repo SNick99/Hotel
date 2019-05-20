@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 
 export const registerEmployee = data => dispatch => {
   axios
-    .post('/employee/register', data)
+    .post('/employee/addEmployee', data)
     .then(res => console.log(res.data))
     .catch(err =>
       dispatch({

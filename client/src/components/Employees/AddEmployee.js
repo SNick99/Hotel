@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './Register.css';
 //import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
 //import Input from "../../Layout/Input/Input";
 //import classnames from "classnames";
-import { registerEmployee } from '../../../redux/actions/authActions';
-import { Form, Field } from 'react-final-form';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { renderTextField } from '../../../services/helpers';
-// import validateRegisterInput from '../../../validation/register';
+import { registerEmployee } from '../../redux/actions/authActions';
+import FormContainer from '../../services/FormConteiner';
 
-class Register extends Component {
+class AddEmployee extends Component {
   constructor(props) {
     super(props);
-
+/* for what
     this.state = {
       FirstName: '',
       LastName: '',
@@ -29,28 +23,35 @@ class Register extends Component {
       SalaryChange: '',
       errors: {}
     };
+*/
+    this.headerForm = 'Регистрация';
+    this.submitLabel = 'Зарегистрировать';
 
-    this.DataInput = [
+    this.dataInput = [
       {
         type: 'text',
         label: 'Имя',
-        name: 'FirstName'
+        name: 'FirstName',
+        helperText: ''
       },
       {
         type: 'text',
         label: 'Фамилия',
-        name: 'LastName'
+        name: 'LastName',
+        helperText: ''
       },
       {
-        type: 'text',
+        type: 'number',
         label: 'Телефон',
-        name: 'Phone'
+        name: 'Phone',
+        helperText: ''
       },
 
       {
         type: 'password',
         label: 'Пароль',
-        name: 'Password'
+        name: 'Password',
+        helperText: ''
       },
       {
         type: 'password',
@@ -58,7 +59,7 @@ class Register extends Component {
         name: 'Password2'
       },
       {
-        type: 'text',
+        type: 'date',
         label: 'День рождения',
         name: 'Birthday'
       },
@@ -73,7 +74,7 @@ class Register extends Component {
         name: 'Position'
       },
       {
-        type: 'text',
+        type: 'number',
         label: 'Оклад сотрудника за одну смену',
         name: 'SalaryChange'
       }
@@ -84,45 +85,23 @@ class Register extends Component {
 
   render() {
     return (
-      <>
-        <br />
-        <Typography variant="h6">Регистрация</Typography>
-        <Form
-          onSubmit={this.onSubmit}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={8}>
-                {this.DataInput.map((item, index) => (
-                  <Grid item xs={12} key={`key${index}`}>
-                    <Field
-                      name={item.name}
-                      component={renderTextField}
-                      label={item.name}
-                      type={item.type}
-                      required
-                      fullWidth
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-              <br />
-              <Button color="primary" variant="outlined" type="submit">
-                Submit
-              </Button>
-            </form>
-          )}
-        />
-      </>
+      <FormContainer
+        onSubmit={this.onSubmit}
+        dataInput={this.dataInput}
+        headerForm={this.headerForm}
+        submitLabel={this.submitLabel}
+      />
     );
   }
 }
 
-Register.propTypes = {
+AddEmployee.propTypes = {
   registerEmployee: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
+  console.log(state.auth);
   return {
     auth: state.auth
   };
@@ -131,4 +110,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { registerEmployee }
-)(Register);
+)(AddEmployee);

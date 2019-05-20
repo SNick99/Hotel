@@ -40,19 +40,25 @@ const styles = {
 
 class Navbar extends Component {
   state = {
-    open: false
+    open: false,
+    openCage: false,
+    openClient: false
   };
 
-  handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+  handleToggle = item => {
+    this.setState({ [item]: !this.state[item] });
   };
 
   handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
+    if (
+      this.btnEmployee.contains(event.target) ||
+      this.btnCage.contains(event.target) ||
+      this.btnClient.contains(event.target)
+    ) {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ open: false, openCage: false, openClient: false });
   };
 
   clickLogout = () => {
@@ -71,17 +77,18 @@ class Navbar extends Component {
               </Button>
 
               <Button
+                btnEmployee=""
                 buttonRef={node => {
-                  this.anchorEl = node;
+                  this.btnEmployee = node;
                 }}
-                onClick={this.handleToggle}
+                onClick={() => this.handleToggle('open')}
                 className={classes.link}
               >
                 Сотрудник
               </Button>
               <Popper
                 open={this.state.open}
-                anchorEl={this.anchorEl}
+                anchorEl={this.btnEmployee}
                 transition
                 disablePortal
               >
@@ -108,7 +115,7 @@ class Navbar extends Component {
                           <Button
                             onClick={this.handleClose}
                             component={Link}
-                            to="/employee/register"
+                            to="/employee/addEmployee"
                             className={classes.toggleLink}
                           >
                             Добавить сотрудника
@@ -120,12 +127,109 @@ class Navbar extends Component {
                 )}
               </Popper>
 
-              <Button component={Link} to="/" className={classes.link}>
+              <Button
+                btnCage=""
+                buttonRef={node => {
+                  this.btnCage = node;
+                }}
+                onClick={() => this.handleToggle('openCage')}
+                className={classes.link}
+              >
                 Клетка
               </Button>
+              <Popper
+                open={this.state.openCage}
+                anchorEl={this.btnCage}
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    id="menu-list-grow"
+                    style={{
+                      transformOrigin:
+                        placement === 'bottom' ? 'center top' : 'center bottom'
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={this.handleClose}>
+                        <MenuList className={classes.MenuList}>
+                          <Button
+                            onClick={this.handleClose}
+                            component={Link}
+                            to="/cage/allCages"
+                            className={classes.toggleLink}
+                          >
+                            Все клетки
+                          </Button>
+                          <Button
+                            onClick={this.handleClose}
+                            component={Link}
+                            to="/cage/addCage"
+                            className={classes.toggleLink}
+                          >
+                            Добавить клетку
+                          </Button>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
               <Button component={Link} to="/" className={classes.link}>
                 Продукт
               </Button>
+              <Button
+                btnClient=""
+                buttonRef={node => {
+                  this.btnClient = node;
+                }}
+                onClick={() => this.handleToggle('openClient')}
+                className={classes.link}
+              >
+                Клиент
+              </Button>
+              <Popper
+                open={this.state.openClient}
+                anchorEl={this.btnClient}
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    id="menu-list-grow"
+                    style={{
+                      transformOrigin:
+                        placement === 'bottom' ? 'center top' : 'center bottom'
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={this.handleClose}>
+                        <MenuList className={classes.MenuList}>
+                          <Button
+                            onClick={this.handleClose}
+                            component={Link}
+                            to="/client/allClients"
+                            className={classes.toggleLink}
+                          >
+                            Все клиенты
+                          </Button>
+                          <Button
+                            onClick={this.handleClose}
+                            component={Link}
+                            to="/client/addClient"
+                            className={classes.toggleLink}
+                          >
+                            Добавить клиента
+                          </Button>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </div>
           ) : (
             <Button component={Link} to="/" className={classes.link}>
