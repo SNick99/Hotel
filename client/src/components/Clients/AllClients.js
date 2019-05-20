@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  allEmployees,
-  deleteEmployee
-} from '../../redux/actions/employeesActions';
+/*import {
+  AllClients,
+  deleteCage
+} from '../../redux/actions/clientsActions';*/
 import TableContainer from '../../services/TableContainer';
 
 let test = [
@@ -13,18 +13,18 @@ let test = [
     Фамилия: '111',
     Phone: '111',
     'Дата рождения': '111',
-    Адрес: '111',
-    Должность: '111',
-    'Ставка/день': '111'
+    'Имя питомца': '111',
+    Вид: '111',
+    Код: '111'
   },
   {
     Имя: '222',
     Фамилия: '222',
     Phone: '222',
     'Дата рождения': '222',
-    Адрес: '222',
-    Должность: '222',
-    'Ставка/день': '222'
+    'Имя питомца': '222',
+    Вид: '222',
+    Код: '222'
   }
 ];
 
@@ -33,29 +33,29 @@ const rows = [
   'Фамилия',
   'Телефон',
   'Дата рождения',
-  'Адрес',
-  'Должность',
-  'Ставка/день'
+  'Имя питомца',
+  'Вид',
+  'Код'
 ];
 
-class Employees extends Component {
+class AllClients extends Component {
   state = {
     selected: '',
-    data: test //this.props.employees.employees
+    data: test //this.props.clients
   };
 
   handleEdit = item => {
-    console.log('to edit: ' + item.FirstName); // delete after dev
+    console.log('to edit: ' + item.FirstName);
     this.setState({ selected: item });
   };
 
   handleDelete = item => {
-    console.log(`Удален сотрудник с id ${item}`);
-    return this.props.deleteEmployee(item);
+    console.log(`Удален клиент с id ${item}`);
+    // return this.props.deleteClient(item);
   };
 
   componentDidMount() {
-    this.props.allEmployees();
+    // this.props.AllClients();
   }
 
   render() {
@@ -65,7 +65,7 @@ class Employees extends Component {
       <TableContainer
         rows={rows}
         data={this.state.data}
-        allData={allEmployees}
+        allData={e => console.log('ex')} // AllClients from actions
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
       />
@@ -73,21 +73,21 @@ class Employees extends Component {
   }
 }
 
-Employees.propTypes = {
+AllClients.propTypes = {
   auth: PropTypes.object.isRequired,
-  employees: PropTypes.object.isRequired,
-  allEmployees: PropTypes.func.isRequired,
-  deleteEmployee: PropTypes.func.isRequired
+  //clients: PropTypes.object.isRequired
+  //AllClients: PropTypes.func.isRequired,
+  //deleteClient: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    employees: state.employees
+   // clients: state.clients
   };
 };
 
 export default connect(
-  mapStateToProps,
-  { allEmployees, deleteEmployee }
-)(Employees);
+  mapStateToProps
+  //{ AllClients, deleteCage }
+)(AllClients);

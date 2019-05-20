@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 //import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
 //import Input from "../../Layout/Input/Input";
 //import classnames from "classnames";
-import { registerEmployee } from '../../../redux/actions/authActions';
-import FormContainer from '../../../services/FormConteiner';
+import { registerEmployee } from '../../redux/actions/authActions';
+import FormContainer from '../../services/FormConteiner';
 
-class Register extends Component {
+class AddEmployee extends Component {
   constructor(props) {
     super(props);
 /* for what
@@ -31,23 +31,27 @@ class Register extends Component {
       {
         type: 'text',
         label: 'Имя',
-        name: 'FirstName'
+        name: 'FirstName',
+        helperText: ''
       },
       {
         type: 'text',
         label: 'Фамилия',
-        name: 'LastName'
+        name: 'LastName',
+        helperText: ''
       },
       {
-        type: 'text',
+        type: 'number',
         label: 'Телефон',
-        name: 'Phone'
+        name: 'Phone',
+        helperText: ''
       },
 
       {
         type: 'password',
         label: 'Пароль',
-        name: 'Password'
+        name: 'Password',
+        helperText: ''
       },
       {
         type: 'password',
@@ -55,8 +59,8 @@ class Register extends Component {
         name: 'Password2'
       },
       {
-        type: 'text',
-        helperText: 'День рождения',
+        type: 'date',
+        label: 'День рождения',
         name: 'Birthday'
       },
       {
@@ -70,7 +74,7 @@ class Register extends Component {
         name: 'Position'
       },
       {
-        type: 'text',
+        type: 'number',
         label: 'Оклад сотрудника за одну смену',
         name: 'SalaryChange'
       }
@@ -91,7 +95,7 @@ class Register extends Component {
   }
 }
 
-Register.propTypes = {
+AddEmployee.propTypes = {
   registerEmployee: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -106,4 +110,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { registerEmployee }
-)(Register);
+)(AddEmployee);

@@ -3,6 +3,7 @@ import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
+import { withStyles } from '@material-ui/core/styles';
 import {
   setCurrentEmployee,
   logoutEmployee
@@ -14,12 +15,18 @@ import Navbar from './components/Navbar/Navbar';
 import Landing from './components/Landing/Landing';
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
-<<<<<<< HEAD
-import EmployesList from './components/EmployesList/EmployesList';
-=======
+import AddEmployee from './components/Employees/AddEmployee';
 import Employees from './components/Employees/Employees';
->>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
-import { withStyles } from '@material-ui/core/styles';
+import AddCage from './components/Cages/AddCage';
+import AllCages from './components/Cages/AllCages';
+import AllClients from './components/Clients/AllClients';
+import AddClient from './components/Clients/AddClient';
+import AllOrders from './components/Orders/AllOrders';
+import AddOrder from './components/Orders/AddOrder';
+import AllProducts from './components/Products/AllProducts';
+import AddProduct from './components/Products/AddProduct';
+import AllSchedules from './components/Schedules/AllSchedules';
+import AddSchedule from './components/Schedules/AddSchedule';
 
 const styles = {
   container: {
@@ -62,24 +69,6 @@ if (localStorage.jwtToken) {
 function App(props) {
   const { classes } = props;
 
-<<<<<<< HEAD
-    return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <Navbar />
-                <div className={classes.container}>
-                    <Route path={'/'} exact component={Landing} />
-                    <Switch>
-                        <Route path={'/employee/register'} exact component={Register} />
-                        <Route path={'/employee/login'} exact component={Login} />
-                        <Route path={'/employee/employes'} exact component={EmployesList} />
-                    </Switch>
-                </div>
-                <Footer />
-            </BrowserRouter>
-        </Provider>
-    );
-=======
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -91,10 +80,26 @@ function App(props) {
               <Route path={'/employee/register'} exact component={Register} />
               <Route path={'/employee/login'} exact component={Login} />
               <Route
+                path={'/employee/addEmployee'}
+                exact
+                component={AddEmployee}
+              />
+              <Route
                 path={'/employee/allEmpoloyees'}
                 exact
                 component={Employees}
               />
+              <Route path={'/cage/allCages'} exact component={AllCages} />
+              <Route path={'/cage/addCage'} exact component={AddCage} />
+              <Route path={'/client/allClients'} exact component={AllClients} />
+              <Route path={'/client/addClient'} exact component={AddClient} />
+              <Route path={'/order/allOrders'} exact component={AllOrders} />
+              <Route path={'/order/addOrder'} exact component={AddOrder} />
+              <Route path={'/product/allProducts'} exact component={AllProducts} />
+              <Route path={'/product/addProduct'} exact component={AddProduct} />
+              <Route path={'/schedule/allSchedules'} exact component={AllSchedules} />
+              <Route path={'/schedule/addSchedule'} exact component={AddSchedule} />
+              
             </Switch>
           </div>
           <Footer />
@@ -102,7 +107,6 @@ function App(props) {
       </BrowserRouter>
     </Provider>
   );
->>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
 }
 
 export default withStyles(styles)(App);

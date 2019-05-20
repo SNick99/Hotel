@@ -3,20 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginEmployee } from '../../../redux/actions/authActions';
-//import "./Login.css";
-//import ButtonSubmit from "../../Layout/ButtonSubmit/ButtonSubmit";
-//import Input from "../../Layout/Input/Input";
-import { Form, Field } from 'react-final-form';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-
-import Typography from '@material-ui/core/Typography';
-import { renderTextField } from '../../../services/helpers';
-<<<<<<< HEAD
-import validateLoginInput from '../../../validation/login';
-=======
 // import validateLoginInput from '../../../validation/login';
->>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
+import FormContainer from '../../../services/FormConteiner';
 
 class Login extends Component {
   constructor(props) {
@@ -27,7 +15,10 @@ class Login extends Component {
       Password: ''
     };
 
-    this.DataInput = [
+    this.headerForm = 'Вход';
+    this.submitLabel = 'Войти';
+
+    this.dataInput = [
       {
         type: 'text',
         label: 'Телефон',
@@ -42,15 +33,7 @@ class Login extends Component {
     ];
   }
 
-<<<<<<< HEAD
-  onSubmit = values => {
-    const a = this.props.loginEmployee(values);
-    console.log(a);
-    return a;
-  };
-=======
   onSubmit = values => this.props.loginEmployee(values);
->>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
@@ -66,42 +49,13 @@ class Login extends Component {
   }
 
   render() {
-<<<<<<< HEAD
-    const { errors } = this.props;
-    console.log(errors);
-=======
->>>>>>> 8f25f19a2d434e57a575bb79a26806a7410df2c9
     return (
-      <>
-        <br />
-        <Typography variant="h6">Вход</Typography>
-        <Form
-          onSubmit={this.onSubmit}
-          // validate={validateLoginInput}
-          render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={8}>
-                {this.DataInput.map((item, index) => (
-                  <Grid item xs={12} key={`key${index}`}>
-                    <Field
-                      name={item.name}
-                      component={renderTextField}
-                      label={item.name}
-                      type={item.type}
-                      required
-                      fullWidth
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-              <br />
-              <Button color="primary" variant="outlined" type="submit">
-                Submit
-              </Button>
-            </form>
-          )}
-        />
-      </>
+      <FormContainer
+        dataInput={this.dataInput}
+        onSubmit={this.onSubmit}
+        headerForm={this.headerForm}
+        submitLabel={this.submitLabel}
+      />
     );
   }
 }
