@@ -6,6 +6,7 @@ import {
   deleteEmployee
 } from '../../redux/actions/employeesActions';
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 // let test = [
 //   {
@@ -45,8 +46,8 @@ class Employees extends Component {
     data: this.props.employees.employees
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName); // delete after dev
+  handleEdit = (e, item) => {
+    console.log(item); // delete after dev
     this.setState({ selected: item });
   };
 
@@ -55,7 +56,7 @@ class Employees extends Component {
     return this.props.deleteEmployee(item);
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.allEmployees();
   }
 
@@ -79,9 +80,10 @@ class Employees extends Component {
       <TableContainer
         rows={rows}
         data={sendData}
-        // allData={this.props.employees.employees}
+        searchProp="Phone"
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.employeeInputs}
       />
     );
   }

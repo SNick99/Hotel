@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FormContainer from '../../services/FormConteiner';
+import FormContainer from '../../services/FormContainer';
 
 class AddProduct extends Component {
   constructor(props) {
@@ -35,6 +35,24 @@ class AddProduct extends Component {
           type: 'text',
           label: 'Сотрудник',
           name: 'Employee'
+        },
+        {
+          type: 'text',
+          label: 'Имя',
+          name: 'FirstName',
+          helperText: ''
+        },
+        {
+          type: 'text',
+          label: 'Фамилия',
+          name: 'LastName',
+          helperText: ''
+        },
+        {
+          type: 'number',
+          label: 'Телефон',
+          name: 'Phone',
+          helperText: ''
         }
       ];
   }

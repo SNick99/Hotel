@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
+import Modal from '@material-ui/core/Modal';
+import ModalEdit from './ModalEdit';
 
 const styles = theme => ({
   root: {
@@ -30,6 +32,16 @@ const styles = theme => ({
   pagination: {
     marginRight: '1em',
     fontSize: '.8em'
+  },
+  modal: {
+    position: 'absolute',
+    margin: '5% 15%',
+    height: '70%',
+    width: '70%',
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none'
   }
 });
 
@@ -37,19 +49,31 @@ class TableContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.data,
-      changed: this.props.data,
+      selected: '',
+      searchProp: this.props.searchProp,
+      data: [],
+      changed: '',
       page: 0,
-      rowsPerPage: 5
+      rowsPerPage: 5,
+      modalOpen: false
     };
   }
+
   handleSearch = e => {
-    console.log(e.target.value);
-    const searchedData = this.state.changed;
     this.setState({
-      data: searchedData.filter(item => item.Phone.includes(e.target.value))
+      changed: e.target.value
     });
     // todo
+  };
+
+  handleOpenModal = (e, n) => {
+    this.props.handleEdit(e, n);
+    this.setState({ modalOpen: true, selected: n });
+  };
+
+  handleCloseModal = n => {
+    console.log(n); // data after changes
+    this.setState({ modalOpen: false });
   };
 
   handleChangePage = page => {
@@ -60,15 +84,37 @@ class TableContainer extends Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (state.data !== props.data) {
+      return {
+        data: props.data.filter(item =>
+          item[state.searchProp].includes(state.changed)
+        )
+      };
+    }
+  }
+
   render() {
-    const { classes, rows, handleEdit, handleDelete, data } = this.props;
-    const { rowsPerPage, page } = this.state;
-    console.log('Data', data);
+    const { classes, rows, handleEdit, handleDelete, modalInputs } = this.props;
+    const { rowsPerPage, page, data } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
       <Paper className={classes.root}>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.modalOpen}
+          onClose={this.handleCloseModal}
+        >
+          <div className={classes.modal}>
+            <ModalEdit
+              selected={this.state.selected}
+              dataInput={modalInputs}
+              onSubmit={this.handleCloseModal}
+            />
+          </div>
+        </Modal>
         <TextField
           label="Поиск"
           type="search"

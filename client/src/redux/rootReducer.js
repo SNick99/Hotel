@@ -6,8 +6,11 @@ import employeesReducer from './reducers/employeesReducer';
 
 import cageReducer from './reducers/cageReducer';
 
+import clientsReducer from './reducers/clientsReducer';
+
 export default combineReducers({
   auth: authReducer,
   employees: employeesReducer,
-  cages: cageReducer
+  cages: cageReducer,
+  clients: clientsReducer
 });

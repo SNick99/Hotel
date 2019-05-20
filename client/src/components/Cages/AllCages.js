@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { allCages, deleteCage } from '../../redux/actions/cagesActions';
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 // let test = [
 //   {
@@ -29,8 +30,8 @@ class AllCages extends Component {
     data: this.props.cages
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName);
+  handleEdit = (e, item) => {
+    console.log(item); // delete after dev
     this.setState({ selected: item });
   };
 
@@ -61,8 +62,10 @@ class AllCages extends Component {
       <TableContainer
         rows={rows}
         data={sendData}
+        searchProp="NameFirma"
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.cageInputs}
       />
     );
   }
@@ -70,6 +73,7 @@ class AllCages extends Component {
 
 allCages.propTypes = {
   auth: PropTypes.object.isRequired,
+
   cages: PropTypes.object.isRequired,
   allCages: PropTypes.func.isRequired,
   deleteCage: PropTypes.func.isRequired

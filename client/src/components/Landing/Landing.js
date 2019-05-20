@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-
+import picture from '../../images/pets.jpg';
+import './Landing.css';
 class Landing extends Component {
   render() {
-    return <div>Hello I'm landing</div>;
+    return (
+      <div>
+        <img alt="картинка панды в теории" src={picture} />
+      </div>
+    );
   }
 }
 

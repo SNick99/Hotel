@@ -77,7 +77,7 @@ class Navbar extends Component {
               </Button>
 
               <Button
-                btnEmployee=""
+                inputprops={{ btnEmployee: '' }}
                 buttonRef={node => {
                   this.btnEmployee = node;
                 }}
@@ -128,7 +128,7 @@ class Navbar extends Component {
               </Popper>
 
               <Button
-                btnCage=""
+                inputprops={{ btnCage: '' }}
                 buttonRef={node => {
                   this.btnCage = node;
                 }}
@@ -181,7 +181,7 @@ class Navbar extends Component {
                 Продукт
               </Button>
               <Button
-                btnClient=""
+                inputprops={{ btnClient: '' }}
                 buttonRef={node => {
                   this.btnClient = node;
                 }}

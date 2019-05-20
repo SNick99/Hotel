@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FormContainer from '../../services/FormConteiner';
+import FormContainer from '../../services/FormContainer';
+import { inputs } from '../../services/dataInputs';
 
 class AddClient extends Component {
   constructor(props) {
     super(props);
-
     this.headerForm = 'Добавить в график';
     this.submitLabel = 'Добавить';
-
-    this.dataInput = [
-        {
-          type: 'date',
-          label: 'Дата смены',
-          name: 'FirstName'
-        },
-        {
-          type: 'text',
-          label: 'Сотрудник',
-          name: 'Employee'
-        }
-      ];
+    this.dataInput = inputs.scheduleInputs;
   }
 
   onSubmit = values => console.log(values); //this.props.AddClient(values);

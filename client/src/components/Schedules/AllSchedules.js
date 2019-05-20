@@ -6,25 +6,24 @@ import { connect } from 'react-redux';
   deleteCage
 } from '../../redux/actions/schedulesActions';*/
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 let test = [
   {
+    Датасмены: '111',
     Имя: '111',
     Фамилия: '111',
-    Phone: '111',
+    Phone: '111'
   },
   {
+    Датасмены: '111',
     Имя: '222',
     Фамилия: '222',
     Phone: '222'
   }
 ];
 
-const rows = [
-  'Имя',
-  'Фамилия',
-  'Телефон'
-];
+const rows = ['Дата смены', 'Имя', 'Фамилия', 'Телефон'];
 
 class AllSchedules extends Component {
   state = {
@@ -52,17 +51,19 @@ class AllSchedules extends Component {
     return (
       <TableContainer
         rows={rows}
+        searchProp="Phone"
         data={this.state.data}
         allData={e => console.log('ex')} // AllSchedules from actions
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.scheduleInputs}
       />
     );
   }
 }
 
 AllSchedules.propTypes = {
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
   //schedules: PropTypes.object.isRequired
   //AllSchedules: PropTypes.func.isRequired,
   //deleteClient: PropTypes.func.isRequired,
@@ -70,8 +71,8 @@ AllSchedules.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
-   // schedules: state.schedules
+    auth: state.auth
+    // schedules: state.schedules
   };
 };
 

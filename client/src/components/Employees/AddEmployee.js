@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 //import Input from "../../Layout/Input/Input";
 //import classnames from "classnames";
 import { registerEmployee } from '../../redux/actions/authActions';
-import FormContainer from '../../services/FormConteiner';
+import FormContainer from '../../services/FormContainer';
 
 class AddEmployee extends Component {
   constructor(props) {
     super(props);
-/* for what
+    /* for what
     this.state = {
       FirstName: '',
       LastName: '',
@@ -101,7 +101,6 @@ AddEmployee.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log(state.auth);
   return {
     auth: state.auth
   };

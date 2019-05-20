@@ -143,6 +143,7 @@ router.get(
         const sendData = projects.map((item, i) => {
           let currentPet = item.client_pets.map(item2 => {
             return forSend.push({
+              id: item.id,
               FirstName: item.FirstName,
               LastName: item.LastName,
               Phone: item.Phone,
@@ -184,6 +185,7 @@ router.delete(
             const sendData = projects.map((item, i) => {
               let currentPet = item.client_pets.map(item2 => {
                 return forSend.push({
+                  id: item.id,
                   FirstName: item.FirstName,
                   LastName: item.LastName,
                   Phone: item.Phone,
@@ -235,6 +237,7 @@ router.put(
                 const sendData = projects.map((item, i) => {
                   let currentPet = item.client_pets.map(item2 => {
                     return forSend.push({
+                      id: item.id,
                       FirstName: item.FirstName,
                       LastName: item.LastName,
                       Phone: item.Phone,
