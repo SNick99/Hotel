@@ -6,18 +6,19 @@ import { connect } from 'react-redux';
   deleteCage
 } from '../../redux/actions/cagesActions';*/
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 let test = [
   {
     Название: '111',
-    Фирма: '111',
+    NameFirma: '111',
     Тип: '111',
     Вид: '111',
     Цена: '111'
   },
   {
     Название: '222',
-    Фирма: '222',
+    NameFirma: '222',
     Тип: '222',
     Вид: '222',
     Цена: '222'
@@ -32,8 +33,8 @@ class allCages extends Component {
     data: test //this.props.cages
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName);
+  handleEdit = (e,item) => {
+    console.log(item); // delete after dev
     this.setState({ selected: item });
   };
 
@@ -52,10 +53,12 @@ class allCages extends Component {
     return (
       <TableContainer
         rows={rows}
+        searchProp="NameFirma" 
         data={this.state.data}
         allData={e => console.log('ex')} // allCages from actions
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.cageInputs}
       />
     );
   }
@@ -63,7 +66,7 @@ class allCages extends Component {
 
 allCages.propTypes = {
   auth: PropTypes.object.isRequired,
-  cages: PropTypes.object.isRequired
+  //cages: PropTypes.object.isRequired
   //allCages: PropTypes.func.isRequired,
   //deleteCage: PropTypes.func.isRequired,
 };
@@ -71,7 +74,7 @@ allCages.propTypes = {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    cages: state.cages
+    //cages: state.cages
   };
 };
 

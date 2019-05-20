@@ -6,14 +6,15 @@ import {
   deleteEmployee
 } from '../../redux/actions/employeesActions';
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 let test = [
   {
-    Имя: '111',
-    Фамилия: '111',
+   'FirstName': '111',
+    LastName: '111',
     Phone: '111',
-    'Дата рождения': '111',
-    Адрес: '111',
+    'Birthday': '111',
+    Adress: '111',
     Должность: '111',
     'Ставка/день': '111'
   },
@@ -44,8 +45,8 @@ class Employees extends Component {
     data: test //this.props.employees.employees
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName); // delete after dev
+  handleEdit = (e,item) => {
+    console.log(item); // delete after dev
     this.setState({ selected: item });
   };
 
@@ -64,10 +65,12 @@ class Employees extends Component {
     return (
       <TableContainer
         rows={rows}
+        searchProp="Phone" 
         data={this.state.data}
         allData={allEmployees}
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.employeeInputs} 
       />
     );
   }

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
   deleteCage
 } from '../../redux/actions/clientsActions';*/
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 let test = [
   {
@@ -44,8 +45,8 @@ class AllClients extends Component {
     data: test //this.props.clients
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName);
+  handleEdit = (e,item) => {
+    console.log(item); // delete after dev
     this.setState({ selected: item });
   };
 
@@ -64,10 +65,12 @@ class AllClients extends Component {
     return (
       <TableContainer
         rows={rows}
+        searchProp="Phone" 
         data={this.state.data}
         allData={e => console.log('ex')} // AllClients from actions
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.clientInputs}
       />
     );
   }

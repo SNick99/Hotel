@@ -6,30 +6,37 @@ import { connect } from 'react-redux';
   deleteCage
 } from '../../redux/actions/productsActions';*/
 import TableContainer from '../../services/TableContainer';
+import { inputs } from '../../services/dataInputs';
 
 let test = [
   {
-    'Название': '111',
-    'Фирма': '111',
+    Название: '111',
+    NameFirma: '111',
     'Стоимость (продажа)': '111',
     'Стоимость (покупка)': '111',
-    'Сотрудник': '111',
+    Имя: '111',
+    Фамилия: '111',
+    Phone: '111'
   },
   {
-    'Название': '222',
-    'Фирма': '222',
+    Название: '222',
+    NameFirma: '222',
     'Стоимость (продажа)': '222',
     'Стоимость (покупка)': '222',
-    'Сотрудник': '222'
+    Имя: '222',
+    Фамилия: '222',
+    Phone: '222'
   }
 ];
 
 const rows = [
   'Название',
-    'Фирма',
-    'Стоимость (продажа)',
-    'Стоимость (покупка)',
-    'Сотрудник'
+  'Фирма',
+  'Стоимость (продажа)',
+  'Стоимость (покупка)',
+  'Имя',
+  'Фамилия',
+  'Телефон'
 ];
 
 class AllProducts extends Component {
@@ -38,8 +45,8 @@ class AllProducts extends Component {
     data: test //this.props.products
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName);
+  handleEdit = (e, item) => {
+    console.log(item); // delete after dev
     this.setState({ selected: item });
   };
 
@@ -58,17 +65,19 @@ class AllProducts extends Component {
     return (
       <TableContainer
         rows={rows}
+        searchProp="NameFirma"
         data={this.state.data}
         allData={e => console.log('ex')} // AllProducts from actions
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
+        modalInputs={inputs.productInputs}
       />
     );
   }
 }
 
 AllProducts.propTypes = {
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
   //products: PropTypes.object.isRequired
   //AllProducts: PropTypes.func.isRequired,
   //deleteClient: PropTypes.func.isRequired,
@@ -76,8 +85,8 @@ AllProducts.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
-   // products: state.products
+    auth: state.auth
+    // products: state.products
   };
 };
 

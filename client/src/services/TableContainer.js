@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
+import Modal from '@material-ui/core/Modal';
+import ModalEdit from './ModalEdit';
 
 const styles = theme => ({
   root: {
@@ -30,6 +32,16 @@ const styles = theme => ({
   pagination: {
     marginRight: '1em',
     fontSize: '.8em'
+  },
+  modal: {
+    position: 'absolute',
+    margin: '5% 15%',
+    height: '70%',
+    width: '70%',
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none'
   }
 });
 
@@ -37,19 +49,34 @@ class TableContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selected: '',
+      searchProp: this.props.searchProp,
       data: this.props.data,
       changed: this.props.data,
       page: 0,
-      rowsPerPage: 5
+      rowsPerPage: 5,
+      modalOpen: false
     };
   }
   handleSearch = e => {
     console.log(e.target.value);
     const searchedData = this.state.changed;
     this.setState({
-      data: searchedData.filter(item => item.Phone.includes(e.target.value))
+      data: searchedData.filter(item =>
+        item[this.state.searchProp].includes(e.target.value)
+      )
     });
     // todo
+  };
+
+  handleOpenModal = (e, n) => {
+    this.props.handleEdit(e, n);
+    this.setState({ modalOpen: true, selected: n });
+  };
+
+  handleCloseModal = n => {
+    console.log(n); // data after changes
+    this.setState({ modalOpen: false });
   };
 
   handleChangePage = page => {
@@ -65,7 +92,7 @@ class TableContainer extends Component {
   }
 
   render() {
-    const { classes, rows, handleEdit, handleDelete } = this.props;
+    const { classes, rows, handleEdit, handleDelete, modalInputs } = this.props;
     const { rowsPerPage, page, data } = this.state;
     console.log('Data', data);
     const emptyRows =
@@ -73,6 +100,20 @@ class TableContainer extends Component {
 
     return (
       <Paper className={classes.root}>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.modalOpen}
+          onClose={this.handleCloseModal}
+        >
+          <div className={classes.modal}>
+            <ModalEdit
+              selected={this.state.selected}
+              dataInput={modalInputs}
+              onSubmit={this.handleCloseModal}
+            />
+          </div>
+        </Modal>
         <TextField
           label="Поиск"
           type="search"
@@ -99,7 +140,7 @@ class TableContainer extends Component {
                       <Tooltip title="Редактировать">
                         <IconButton
                           aria-label="Edit"
-                          onClick={e => handleEdit(e, n)}
+                          onClick={e => this.handleOpenModal(e, n)}
                         >
                           <Icon />
                         </IconButton>

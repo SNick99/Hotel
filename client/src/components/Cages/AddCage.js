@@ -1,46 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FormContainer from '../../services/FormConteiner';
+import FormContainer from '../../services/FormContainer';
+import { inputs } from '../../services/dataInputs';
 
 class AddCage extends Component {
   constructor(props) {
     super(props);
-/* for what
-    this.state = {
-      KindOfCage: '',
-      NameFirma: '',
-      PriceOfDay: '',
-      TypeOfCage: '',
-      errors: {}
-    };
-*/
     this.headerForm = 'Новая клетка';
     this.submitLabel = 'Добавить';
-
-    this.dataInput = [
-      {
-        type: 'text',
-        name: 'KindOfCage',
-        label: 'Название'
-      },
-      {
-        type: 'text',
-        name: 'NameFirma',
-        label: 'Фирма'
-      },
-      {
-        type: 'number',
-        name: 'PriceOfDay',
-        label: 'Стоимость/сутки'
-      },
-
-      {
-        type: 'text',
-        name: 'TypeOfCage',
-        label: 'Тип'
-      }
-    ];
+    this.dataInput = inputs.cageInputs;
   }
 
   onSubmit = values => console.log(values); //this.props.addCage(values);
