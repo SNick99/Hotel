@@ -29,11 +29,11 @@ let order = (sequelize, DataTypes) => {
   );
 
   Order.associate = models => {
-    Order.belongsTo(models.employee);
-    Order.belongsTo(models.client);
+    Order.belongsTo(models.employee, { onDelete: "SET NULL" });
+    Order.belongsTo(models.client, { onDelete: "SET NULL" });
     Order.hasMany(models.services);
-    Order.hasMany(models.cageOrder, { onDelete: "CASCADE" });
-    Order.hasMany(models.productOrder, { onDelete: "CASCADE" });
+    Order.hasMany(models.cageOrder);
+    Order.hasMany(models.productOrder);
   };
 
   return Order;

@@ -10,7 +10,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your Name",
           },
         },
       },
@@ -19,7 +19,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your LastName",
           },
         },
       },
@@ -28,7 +28,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your Phone",
           },
 
           is: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, //XXX-XXX-XXXX
@@ -43,7 +43,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your password",
+            msg: "Please enter your Password",
           },
         },
       },
@@ -52,7 +52,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your Birthday",
           },
         },
       },
@@ -61,7 +61,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your Adress",
           },
         },
       },
@@ -70,7 +70,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your StartDate",
           },
         },
       },
@@ -79,7 +79,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your Position",
           },
         },
       },
@@ -88,7 +88,7 @@ let employee = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your SalaryChange",
           },
 
           min: 1,
@@ -99,8 +99,8 @@ let employee = (sequelize, DataTypes) => {
   );
 
   Employee.associate = models => {
-    Employee.hasMany(models.schedule, { onDelete: "CASCADE" });
-    Employee.hasMany(models.order, { onDelete: "CASCADE" });
+    Employee.hasMany(models.schedule);
+    Employee.hasMany(models.order);
   };
 
   return Employee;

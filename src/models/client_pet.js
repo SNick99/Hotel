@@ -9,8 +9,8 @@ let client_pet = (sequelize, DataTypes) => {
   );
 
   Client_Pet.associate = models => {
-    Client_Pet.belongsTo(models.client);
-    Client_Pet.belongsTo(models.pet);
+    Client_Pet.belongsTo(models.client, { onDelete: "CASCADE" });
+    Client_Pet.belongsTo(models.pet, { onDelete: "CASCADE" });
   };
 
   return Client_Pet;

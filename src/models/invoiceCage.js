@@ -19,8 +19,8 @@ let invoiceCage = (sequelize, DataTypes) => {
   );
 
   InvoiceCage.associate = models => {
-    InvoiceCage.belongsTo(models.employee);
-    InvoiceCage.hasMany(models.invoiceCage_cage, { onDelete: "CASCADE" });
+    InvoiceCage.belongsTo(models.employee, { onDelete: "SET NULL" });
+    InvoiceCage.hasMany(models.invoiceCage_cage);
   };
 
   return InvoiceCage;

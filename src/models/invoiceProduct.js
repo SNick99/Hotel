@@ -15,14 +15,14 @@ let invoiceProduct = (sequelize, DataTypes) => {
         },
       },
     },
-    { sequelize, modelName: "invoiceProduct ", timestamps: false }
+    { sequelize, modelName: "invoiceProduct", timestamps: false }
   );
 
   InvoiceProduct.associate = models => {
-    InvoiceProduct.belongsTo(models.employee);
-    InvoiceProduct.hasMany(models.invoiceProduct_product, {
-      onDelete: "CASCADE",
+    InvoiceProduct.belongsTo(models.employee, {
+      onDelete: "SET NULL",
     });
+    InvoiceProduct.hasMany(models.invoiceProduct_product);
   };
 
   return InvoiceProduct;

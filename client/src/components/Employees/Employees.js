@@ -82,7 +82,7 @@ class Employees extends Component {
 
   render() {
     const { classes } = this.props;
-    const { rowsPerPage, page } = this.state;
+    const { rowsPerPage, page, selected } = this.state;
     console.log('Data', this.props.employees.employees);
     const emptyRows =
       rowsPerPage -
@@ -118,13 +118,28 @@ class Employees extends Component {
                         </IconButton>
                       </Tooltip>
                     </TableCell>
-                    <TableCell align="left">{n.FirstName}</TableCell>
-                    <TableCell align="left">{n.LastName}</TableCell>
-                    <TableCell align="left">{n.Phone}</TableCell>
-                    <TableCell align="left">{n.Birthday}</TableCell>
-                    <TableCell align="left">{n.Adress}</TableCell>
-                    <TableCell align="left">{n.Position}</TableCell>
-                    <TableCell align="left">{n.SalaryChange}</TableCell>
+                    {selected == n ? (
+                      <React.Fragment>
+                        <TableCell align="left">{1}</TableCell>
+                        <TableCell align="left">{1}</TableCell>
+                        <TableCell align="left">{1}</TableCell>
+                        <TableCell align="left">{1}</TableCell>
+                        <TableCell align="left">{1}</TableCell>
+                        <TableCell align="left">{1}</TableCell>
+                        <TableCell align="left">{1}</TableCell>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <TableCell align="left">{n.FirstName}</TableCell>
+                        <TableCell align="left">{n.LastName}</TableCell>
+                        <TableCell align="left">{n.Phone}</TableCell>
+                        <TableCell align="left">{n.Birthday}</TableCell>
+                        <TableCell align="left">{n.Adress}</TableCell>
+                        <TableCell align="left">{n.Position}</TableCell>
+                        <TableCell align="left">{n.SalaryChange}</TableCell>
+                      </React.Fragment>
+                    )}
+
                     <TableCell>
                       <Tooltip title="Удалить">
                         <IconButton

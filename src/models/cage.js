@@ -49,8 +49,8 @@ let cage = (sequelize, DataTypes) => {
   );
 
   Cage.associate = models => {
-    Cage.hasMany(models.cageOrder, { onDelete: "CASCADE" });
-    Cage.hasMany(models.invoiceCage_cage, { onDelete: "CASCADE" });
+    Cage.hasMany(models.cageOrder);
+    Cage.hasMany(models.invoiceCage_cage);
   };
 
   return Cage;

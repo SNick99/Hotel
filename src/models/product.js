@@ -39,8 +39,8 @@ let product = (sequelize, DataTypes) => {
   );
 
   Product.associate = models => {
-    Product.hasMany(models.productOrder, { onDelete: "CASCADE" });
-    Product.hasMany(models.invoiceProduct_product, { onDelete: "CASCADE" });
+    Product.hasMany(models.productOrder);
+    Product.hasMany(models.invoiceProduct_product);
   };
 
   return Product;

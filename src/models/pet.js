@@ -5,12 +5,12 @@ let pet = (sequelize, DataTypes) => {
 
   Pet.init(
     {
-      FirstName: {
+      NamePet: {
         type: DataTypes.STRING(30),
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your NamePet",
           },
         },
       },
@@ -20,8 +20,12 @@ let pet = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your PassportCode",
           },
+        },
+        unique: {
+          args: true,
+          msg: "PassportCode already in use!",
         },
       },
 
@@ -30,9 +34,8 @@ let pet = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your KindOfPet",
           },
-          is: /[A-Za-z]/,
         },
       },
     },

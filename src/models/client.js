@@ -19,7 +19,7 @@ let client = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your LastName",
           },
         },
       },
@@ -28,10 +28,14 @@ let client = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your Phone",
           },
 
           is: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, //XXX-XXX-XXXX
+        },
+        unique: {
+          args: true,
+          msg: "Phone  already in use!",
         },
       },
       Birthday: {
@@ -39,7 +43,7 @@ let client = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your date",
+            msg: "Please enter your Birthday",
           },
         },
       },
@@ -48,16 +52,8 @@ let client = (sequelize, DataTypes) => {
   );
 
   Client.associate = models => {
-    Client.hasMany(
-      models.clientPet,
-
-      { onDelete: "CASCADE" }
-    );
-    Client.hasMany(
-      models.order,
-
-      { onDelete: "CASCADE" }
-    );
+    Client.hasMany(models.clientPet);
+    Client.hasMany(models.order);
   };
 
   return Client;

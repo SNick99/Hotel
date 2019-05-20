@@ -6,26 +6,25 @@ const passport = require("passport");
 const Today = moment().format("YYYY-MM-DD");
 
 console.log(Today);
-//@route POST cage/addCage
-//@desc add cage
+//@route POST product/addProduct
+//@desc add product
 //@access Private
 router.post(
-  "/addCage",
+  "/addProduct",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    req.context.models.cage
+    req.context.models.product
       .findOne({
         where: {
           NameFirma: req.body.NameFirma,
-          TypeOfCage: req.body.TypeOfCage,
-          KindOfCage: req.body.KindOfCage,
+          NameOfProduct: req.body.NameOfProduct,
         },
         include: [
           {
-            model: req.context.models.invoiceCage_cage,
+            model: req.context.models.invoiceProduct_product,
             include: [
               {
-                model: req.context.models.invoiceCage,
+                model: req.context.models.invoiceProduct,
                 where: {
                   Date: Today,
                 },
@@ -34,42 +33,42 @@ router.post(
           },
         ],
       })
-      .then(cage => {
-        //if cage is true and date is today###############
-        if (cage) {
-          //add to db table invoiceCage_cages
-          req.context.models.invoiceCage_cage.create({
+      .then(product => {
+        //if product is true and date is today###############
+        if (product) {
+          //add to db table invoiceproduct_products
+          req.context.models.invoiceProduct_product.create({
             Amount: req.body.Amount,
             UnitPrice: req.body.UnitPrice,
-            cageId: cage.id,
-            invoiceCageId: cage.invoiceCage_cages[0].invoiceCage.id,
+            productId: product.id,
+            invoiceProductId:
+              product.invoiceProduct_products[0].invoiceProduct.id,
           });
-          //if cage is false and date is today##################
+          res.send("Добавили в накладную");
+          //if product is false and date is today##################
         } else {
-          //add to db table cage
+          //add to db table product
           return Promise.all([
-            req.context.models.cage
+            req.context.models.product
               .findOne({
                 where: {
                   NameFirma: req.body.NameFirma,
-                  TypeOfCage: req.body.TypeOfCage,
-                  KindOfCage: req.body.KindOfCage,
+                  NameOfProduct: req.body.NameOfProduct,
                 },
               })
-              .then(cage => {
-                if (cage) {
-                  return cage;
+              .then(product => {
+                if (product) {
+                  return product;
                 } else {
-                  //add to db table cage
-                  return req.context.models.cage.create({
+                  //add to db table product
+                  return req.context.models.product.create({
                     NameFirma: req.body.NameFirma,
-                    TypeOfCage: req.body.TypeOfCage,
-                    KindOfCage: req.body.KindOfCage,
-                    PriceOfDay: req.body.PriceOfDay,
+                    NameOfProduct: req.body.NameOfProduct,
+                    PriceOfUnit: req.body.PriceOfUnit,
                   });
                 }
               }),
-            req.context.models.invoiceCage
+            req.context.models.invoiceProduct
               .findOne({
                 where: { Date: Today },
               })
@@ -77,20 +76,20 @@ router.post(
                 if (day) {
                   return day;
                 } else {
-                  //add to db table invoiceCage
-                  return req.context.models.invoiceCage.create({
+                  //add to db table invoiceproduct
+                  return req.context.models.invoiceProduct.create({
                     Date: Today,
                     employeeId: req.body.employeeId,
                   });
                 }
               }),
           ]).then(result => {
-            //add to db table invoiceCage_cages
-            req.context.models.invoiceCage_cage.create({
+            //add to db table invoiceproduct_products
+            req.context.models.invoiceProduct_product.create({
               Amount: req.body.Amount,
               UnitPrice: req.body.UnitPrice,
-              cageId: result[0].id,
-              invoiceCageId: result[1].id,
+              productId: result[0].id,
+              invoiceProductId: result[1].id,
             });
           });
         }
@@ -98,42 +97,22 @@ router.post(
   }
 );
 
-//@route GET cage/addCage
-//@desc get all employees
-//@access Private
-// router.get(
-//   "/addCage",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     req.context.models.employee.findAll().then(employees => {
-//       const sendData = employees.map(item => {
-//         return {
-//           FirstName: item.FirstName,
-//           LastName: item.LastName,
-//           Phone: item.Phone,
-//         };
-//       });
-//       return res.send(sendData);
-//     });
-//   }
-// );
-
 //@route GET cage/allCages
 //@desc get cages
 //@access Private
 router.get(
-  "/allCages",
+  "/allProducts",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
-    req.context.models.cage
+    req.context.models.product
       .findAll({
         include: [
           {
-            model: req.context.models.invoiceCage_cage,
+            model: req.context.models.invoiceProduct_product,
             include: [
               {
-                model: req.context.models.invoiceCage,
+                model: req.context.models.invoiceProduct,
               },
             ],
           },
@@ -141,7 +120,7 @@ router.get(
       })
       .then(projects => {
         const sendData = projects.map(item => {
-          let data = item.invoiceCage_cages.reduce((sum, current) => {
+          let data = item.invoiceProduct_products.reduce((sum, current) => {
             return {
               Amount: sum.Amount + current.Amount,
               UnitPrice: sum.UnitPrice + current.UnitPrice,
@@ -150,9 +129,8 @@ router.get(
           return {
             id: item.id,
             NameFirma: item.NameFirma,
-            KindOfCage: item.KindOfCage,
-            TypeOfCage: item.TypeOfCage,
-            PriceOfDay: item.PriceOfDay,
+            NameOfProduct: item.NameOfProduct,
+            PriceOfUnit: item.PriceOfUnit,
             Amount: data.Amount,
             SumUnitPrice: data.UnitPrice,
           };
@@ -166,21 +144,21 @@ router.get(
 //@desc Return all cages and delete one
 //@access Private
 router.delete(
-  "/allCages/:id",
+  "/allProducts/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    req.context.models.cage
+    req.context.models.product
       .destroy({ where: { id: req.params.id } })
       .then(cage => {
-        console.log(`Клетка удалена? 1 means yes, 0 means no: ${cage}`);
-        return req.context.models.cage
+        console.log(`Product удален? 1 means yes, 0 means no: ${cage}`);
+        return req.context.models.product
           .findAll({
             include: [
               {
-                model: req.context.models.invoiceCage_cage,
+                model: req.context.models.invoiceProduct_product,
                 include: [
                   {
-                    model: req.context.models.invoiceCage,
+                    model: req.context.models.invoiceProduct,
                   },
                 ],
               },
@@ -188,7 +166,7 @@ router.delete(
           })
           .then(projects => {
             const sendData = projects.map(item => {
-              let data = item.invoiceCage_cages.reduce((sum, current) => {
+              let data = item.invoiceProduct_products.reduce((sum, current) => {
                 return {
                   Amount: sum.Amount + current.Amount,
                   UnitPrice: sum.UnitPrice + current.UnitPrice,
@@ -197,9 +175,8 @@ router.delete(
               return {
                 id: item.id,
                 NameFirma: item.NameFirma,
-                KindOfCage: item.KindOfCage,
-                TypeOfCage: item.TypeOfCage,
-                PriceOfDay: item.PriceOfDay,
+                NameOfProduct: item.NameOfProduct,
+                PriceOfUnit: item.PriceOfUnit,
                 Amount: data.Amount,
                 SumUnitPrice: data.UnitPrice,
               };
@@ -214,39 +191,34 @@ router.delete(
 //@desc Return all Empoloyees and update one
 //@access Private
 router.put(
-  "/allCages/:id",
+  "/allProducts/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // const { errors, isValid } = employeeUpdate(req.body);
-
-    // //Check validation
-    // if (!isValid) {
-    //   return res.status(400).json(errors);
-    // }
-    req.context.models.cage
+    req.context.models.product
       .findOne({
         where: { id: req.params.id },
         include: [
           {
-            model: req.context.models.invoiceCage_cage,
+            model: req.context.models.invoiceProduct_product,
           },
         ],
       })
-      .then(cage => {
-        cage
+      .then(product => {
+        product
           .update({
             NameFirma: req.body.NameFirma,
-            PriceOfDay: req.body.PriceOfDay,
+            NameOfProduct: req.body.NameOfProduct,
+            PriceOfUnit: req.body.PriceOfUnit,
           })
           .then(() => {
-            return req.context.models.cage
+            return req.context.models.product
               .findAll({
                 include: [
                   {
-                    model: req.context.models.invoiceCage_cage,
+                    model: req.context.models.invoiceProduct_product,
                     include: [
                       {
-                        model: req.context.models.invoiceCage,
+                        model: req.context.models.invoiceProduct,
                       },
                     ],
                   },
@@ -254,18 +226,19 @@ router.put(
               })
               .then(projects => {
                 const sendData = projects.map(item => {
-                  let data = item.invoiceCage_cages.reduce((sum, current) => {
-                    return {
-                      Amount: sum.Amount + current.Amount,
-                      UnitPrice: sum.UnitPrice + current.UnitPrice,
-                    };
-                  });
+                  let data = item.invoiceProduct_products.reduce(
+                    (sum, current) => {
+                      return {
+                        Amount: sum.Amount + current.Amount,
+                        UnitPrice: sum.UnitPrice + current.UnitPrice,
+                      };
+                    }
+                  );
                   return {
                     id: item.id,
                     NameFirma: item.NameFirma,
-                    KindOfCage: item.KindOfCage,
-                    TypeOfCage: item.TypeOfCage,
-                    PriceOfDay: item.PriceOfDay,
+                    NameOfProduct: item.NameOfProduct,
+                    PriceOfUnit: item.PriceOfUnit,
                     Amount: data.Amount,
                     SumUnitPrice: data.UnitPrice,
                   };

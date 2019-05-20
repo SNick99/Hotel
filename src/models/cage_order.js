@@ -9,8 +9,8 @@ let cage_order = (sequelize, DataTypes) => {
   );
 
   Cage_order.associate = models => {
-    Cage_order.belongsTo(models.order);
-    Cage_order.belongsTo(models.cage);
+    Cage_order.belongsTo(models.order, { onDelete: "SET NULL" });
+    Cage_order.belongsTo(models.cage, { onDelete: "SET NULL" });
   };
 
   return Cage_order;

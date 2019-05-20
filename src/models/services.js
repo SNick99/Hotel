@@ -31,7 +31,7 @@ let services = (sequelize, DataTypes) => {
   );
 
   Services.associate = models => {
-    Services.belongsTo(models.order);
+    Services.belongsTo(models.order, { onDelete: "CASCADE" });
   };
 
   return Services;

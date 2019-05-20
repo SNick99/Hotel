@@ -9,8 +9,8 @@ let product_order = (sequelize, DataTypes) => {
   );
 
   Product_order.associate = models => {
-    Product_order.belongsTo(models.order);
-    Product_order.belongsTo(models.product);
+    Product_order.belongsTo(models.order, { onDelete: "SET NULL" });
+    Product_order.belongsTo(models.product, { onDelete: "SET NULL" });
   };
 
   return Product_order;

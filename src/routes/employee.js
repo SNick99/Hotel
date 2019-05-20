@@ -9,11 +9,12 @@ const passport = require("passport");
 //Load Input validation
 import validateRegisterInput from "../validation/register";
 import validateLoginInput from "../validation/login";
+import employeeUpdate from "../validation/employeeUpdate";
 
 //@route POST employee/register
 //@desc Register employee
 //@access Public
-router.post("/register", (req, res) => {
+router.post("/addEmployee", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   //Check validation
@@ -111,32 +112,12 @@ router.post("/login", (req, res) => {
     });
 });
 
-//@route GET employee/current
-//@desc Return current employee
-//@access Private
-router.get(
-  "/current",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json({
-      FirstName: req.user.FirstName,
-      LastName: req.user.LastName,
-      Phone: req.user.Phone,
-      Birthday: req.user.Birthday,
-      Adress: req.user.Adress,
-      StartDate: req.user.StartDate,
-      Position: req.user.Position,
-      SalaryChange: req.user.SalaryChange,
-    });
-  }
-);
-
 //@route GET employee/allEmpoloyees
 //@desc Return all Empoloyees
 //@access Private
 router.get(
   "/allEmployees",
-
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     req.context.models.employee.findAll().then(projects => {
       return res.send(projects);
@@ -158,6 +139,40 @@ router.delete(
         return req.context.models.employee.findAll().then(projects => {
           return res.send(projects);
         });
+      });
+  }
+);
+
+//@route UPDATE employee/allEmployees/:id
+//@desc Return all Empoloyees and update one
+//@access Private
+router.put(
+  "/allEmployees/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = employeeUpdate(req.body);
+
+    //Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    req.context.models.employee
+      .findOne({ where: { id: req.params.id } })
+      .then(employee => {
+        employee
+          .update({
+            FirstName: req.body.FirstName,
+            LastName: req.body.LastName,
+            Birthday: req.body.Birthday,
+            Adress: req.body.Adress,
+            Position: req.body.Position,
+            SalaryChange: req.body.SalaryChange,
+          })
+          .then(() => {
+            return req.context.models.employee.findAll().then(projects => {
+              return res.send(projects);
+            });
+          });
       });
   }
 );

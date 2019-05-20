@@ -10,7 +10,7 @@ let invoiceProduct_product = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your PriceOfDay",
+            msg: "Please enter your Amount",
           },
 
           min: 1,
@@ -22,7 +22,7 @@ let invoiceProduct_product = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your PriceOfDay",
+            msg: "Please enter your UnitPrice",
           },
 
           min: 1,
@@ -34,7 +34,7 @@ let invoiceProduct_product = (sequelize, DataTypes) => {
 
   InvoiceProduct_product.associate = models => {
     InvoiceProduct_product.belongsTo(models.invoiceProduct);
-    InvoiceProduct_product.belongsTo(models.product);
+    InvoiceProduct_product.belongsTo(models.product, { onDelete: "SET NULL" });
   };
 
   return InvoiceProduct_product;

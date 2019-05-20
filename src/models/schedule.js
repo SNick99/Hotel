@@ -6,11 +6,11 @@ let schedule = (sequelize, DataTypes) => {
     {
       id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
       DateChange: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please enter your date",
           },
         },
       },
@@ -19,7 +19,7 @@ let schedule = (sequelize, DataTypes) => {
   );
 
   Schedule.associate = models => {
-    Schedule.belongsTo(models.employee);
+    Schedule.belongsTo(models.employee, { onDelete: "CASCADE" });
   };
 
   return Schedule;
