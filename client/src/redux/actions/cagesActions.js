@@ -6,12 +6,12 @@ import * as actionType from './types';
 export const allCages = data => dispatch => {
   axios
     .get('/cage/allCages', data)
-    .then(res =>
-      dispatch({
+    .then(res => {
+      return dispatch({
         type: actionType.GET_ALL_CAGES_SUCSSES,
         payload: res.data
-      })
-    )
+      });
+    })
     .catch(err =>
       dispatch({
         type: actionType.GET_ALL_CAGES_FAILER
@@ -20,6 +20,7 @@ export const allCages = data => dispatch => {
 };
 
 export const addCage = data => dispatch => {
+  console.log(data);
   axios
     .post('/cage/addCage', data)
     .then(res => console.log('Add cage' + res.data))

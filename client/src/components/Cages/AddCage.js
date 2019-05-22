@@ -16,7 +16,7 @@ class AddCage extends Component {
   }
 
   onSubmit = values => {
-    values.emoployeeId = this.props.auth.employee.id;
+    values.employeeId = this.props.auth.employee.id;
     this.props.addCage(values);
   };
 

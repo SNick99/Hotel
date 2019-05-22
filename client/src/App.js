@@ -83,7 +83,7 @@ function App(props) {
                 component={AddEmployee}
               />
               <Route
-                path={'/employee/allEmpoloyees'}
+                path={'/employee/allEmployees'}
                 exact
                 component={Employees}
               />
@@ -113,7 +113,6 @@ function App(props) {
                 exact
                 component={AddSchedule}
               />
-
             </Switch>
           </div>
           <Footer />

@@ -72,6 +72,16 @@ export const inputs = {
       type: 'text',
       name: 'TypeOfCage',
       label: 'Тип'
+    },
+    {
+      type: 'number',
+      name: 'Amount',
+      label: 'Количество'
+    },
+    {
+      type: 'number',
+      name: 'UnitPrice',
+      label: 'Цена/клетку'
     }
   ],
   clientInputs: [
@@ -180,27 +190,9 @@ export const inputs = {
       name: 'UnitPrice'
     },
     {
-      type: 'text',
-      label: 'Сотрудник',
-      name: 'Employee'
-    },
-    {
-      type: 'text',
-      label: 'Имя',
-      name: 'FirstName',
-      helperText: ''
-    },
-    {
-      type: 'text',
-      label: 'Фамилия',
-      name: 'LastName',
-      helperText: ''
-    },
-    {
       type: 'number',
-      label: 'Телефон',
-      name: 'Phone',
-      helperText: ''
+      label: 'Количество',
+      name: 'Amount'
     }
   ],
   scheduleInputs: [

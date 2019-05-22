@@ -40,9 +40,68 @@ const styles = {
 
 class Navbar extends Component {
   state = {
-    open: false,
+    openEmployee: false,
     openCage: false,
-    openClient: false
+    openClient: false,
+    openProduct: false,
+    openOrder: false,
+    openSchedule: false,
+    infoNav: [
+      {
+        title: 'Сотрудник',
+        subtitle1: 'Все сотрудники',
+        link1: '/employee/allEmployees',
+        subtitle2: 'Добавить сотрудника',
+        link2: '/employee/addEmployee',
+        forOpen: 'openEmployee',
+        forAnchor: 'btnEmployee'
+      },
+      {
+        title: 'Клетка',
+        subtitle1: 'Все клетки',
+        link1: '/cage/allCages',
+        subtitle2: 'Добавить клетку',
+        link2: '/cage/addCage',
+        forOpen: 'openCage',
+        forAnchor: 'btnCage'
+      },
+      {
+        title: 'Товары',
+        subtitle1: 'Все товары',
+        link1: '/product/allProducts',
+        subtitle2: 'Добавить товар',
+        link2: '/product/addProduct',
+        forOpen: 'openProduct',
+        forAnchor: 'btnProduct'
+      },
+      {
+        title: 'Клиент',
+        subtitle1: 'Все клиенты',
+        link1: '/client/allClients',
+        subtitle2: 'Добавить клиента',
+        link2: '/client/addClient',
+        forOpen: 'openClient',
+        forAnchor: 'btnClient'
+      },
+      {
+        title: 'Заказ',
+        subtitle1: 'Все заказы',
+        link1: '/order/allOrders',
+        subtitle2: 'Добавить заказ',
+        link2: '/order/addOrder',
+        forOpen: 'openOrder',
+        forAnchor: 'btnOrder'
+      },
+      {
+        title: 'График',
+        subtitle1: 'Весь график',
+        link1: '/schedule/allSchedules',
+        subtitle2: 'Добавить в график',
+        link2: '/schedule/addSchedule',
+        forOpen: 'openSchedule',
+        forAnchor: 'btnSchedule'
+      }
+    ]
   };
 
   handleToggle = item => {
@@ -53,12 +112,22 @@ class Navbar extends Component {
     if (
       this.btnEmployee.contains(event.target) ||
       this.btnCage.contains(event.target) ||
-      this.btnClient.contains(event.target)
+      this.btnClient.contains(event.target) ||
+      this.btnProduct.contains(event.target) ||
+      this.btnOrder.contains(event.target) ||
+      this.btnSchedule.contains(event.target)
     ) {
       return;
     }
 
-    this.setState({ open: false, openCage: false, openClient: false });
+    this.setState({
+      openEmployee: false,
+      openCage: false,
+      openClient: false,
+      openProduct: false,
+      openOrder: false,
+      openSchedule: false
+    });
   };
 
   clickLogout = () => {
@@ -75,161 +144,64 @@ class Navbar extends Component {
               <Button component={Link} to="/" className={classes.link}>
                 Главная
               </Button>
-
-              <Button
-                inputprops={{ btnEmployee: '' }}
-                buttonRef={node => {
-                  this.btnEmployee = node;
-                }}
-                onClick={() => this.handleToggle('open')}
-                className={classes.link}
-              >
-                Сотрудник
-              </Button>
-              <Popper
-                open={this.state.open}
-                anchorEl={this.btnEmployee}
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    id="menu-list-grow"
-                    style={{
-                      transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom'
-                    }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={this.handleClose}>
-                        <MenuList className={classes.MenuList}>
-                          <Button
-                            onClick={this.handleClose}
-                            component={Link}
-                            to="/employee/allEmpoloyees"
-                            className={classes.toggleLink}
-                          >
-                            Все сотрудники
-                          </Button>
-                          <Button
-                            onClick={this.handleClose}
-                            component={Link}
-                            to="/employee/addEmployee"
-                            className={classes.toggleLink}
-                          >
-                            Добавить сотрудника
-                          </Button>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-
-              <Button
-                inputprops={{ btnCage: '' }}
-                buttonRef={node => {
-                  this.btnCage = node;
-                }}
-                onClick={() => this.handleToggle('openCage')}
-                className={classes.link}
-              >
-                Клетка
-              </Button>
-              <Popper
-                open={this.state.openCage}
-                anchorEl={this.btnCage}
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    id="menu-list-grow"
-                    style={{
-                      transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom'
-                    }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={this.handleClose}>
-                        <MenuList className={classes.MenuList}>
-                          <Button
-                            onClick={this.handleClose}
-                            component={Link}
-                            to="/cage/allCages"
-                            className={classes.toggleLink}
-                          >
-                            Все клетки
-                          </Button>
-                          <Button
-                            onClick={this.handleClose}
-                            component={Link}
-                            to="/cage/addCage"
-                            className={classes.toggleLink}
-                          >
-                            Добавить клетку
-                          </Button>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-              <Button component={Link} to="/" className={classes.link}>
-                Продукт
-              </Button>
-              <Button
-                inputprops={{ btnClient: '' }}
-                buttonRef={node => {
-                  this.btnClient = node;
-                }}
-                onClick={() => this.handleToggle('openClient')}
-                className={classes.link}
-              >
-                Клиент
-              </Button>
-              <Popper
-                open={this.state.openClient}
-                anchorEl={this.btnClient}
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    id="menu-list-grow"
-                    style={{
-                      transformOrigin:
-                        placement === 'bottom' ? 'center top' : 'center bottom'
-                    }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={this.handleClose}>
-                        <MenuList className={classes.MenuList}>
-                          <Button
-                            onClick={this.handleClose}
-                            component={Link}
-                            to="/client/allClients"
-                            className={classes.toggleLink}
-                          >
-                            Все клиенты
-                          </Button>
-                          <Button
-                            onClick={this.handleClose}
-                            component={Link}
-                            to="/client/addClient"
-                            className={classes.toggleLink}
-                          >
-                            Добавить клиента
-                          </Button>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
+              {this.state.infoNav.map((item, i) => {
+                return (
+                  <React.Fragment key={`key${i}`}>
+                    <Button
+                      inputprops={{ [item.forAnchor]: '' }}
+                      buttonRef={node => {
+                        this[item.forAnchor] = node;
+                      }}
+                      onClick={() => this.handleToggle(item.forOpen)}
+                      className={classes.link}
+                    >
+                      {item.title}
+                    </Button>
+                    <Popper
+                      open={this.state[item.forOpen]}
+                      anchorEl={this[item.forAnchor]}
+                      transition
+                      disablePortal
+                    >
+                      {({ TransitionProps, placement }) => (
+                        <Grow
+                          {...TransitionProps}
+                          id="menu-list-grow"
+                          style={{
+                            transformOrigin:
+                              placement === 'bottom'
+                                ? 'center top'
+                                : 'center bottom'
+                          }}
+                        >
+                          <Paper>
+                            <ClickAwayListener onClickAway={this.handleClose}>
+                              <MenuList className={classes.MenuList}>
+                                <Button
+                                  onClick={this.handleClose}
+                                  component={Link}
+                                  to={item.link1}
+                                  className={classes.toggleLink}
+                                >
+                                  {item.subtitle1}
+                                </Button>
+                                <Button
+                                  onClick={this.handleClose}
+                                  component={Link}
+                                  to={item.link2}
+                                  className={classes.toggleLink}
+                                >
+                                  {item.subtitle2}
+                                </Button>
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </React.Fragment>
+                );
+              })}
             </div>
           ) : (
             <Button component={Link} to="/" className={classes.link}>

@@ -98,26 +98,6 @@ router.post(
   }
 );
 
-//@route GET cage/addCage
-//@desc get all employees
-//@access Private
-// router.get(
-//   "/addCage",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     req.context.models.employee.findAll().then(employees => {
-//       const sendData = employees.map(item => {
-//         return {
-//           FirstName: item.FirstName,
-//           LastName: item.LastName,
-//           Phone: item.Phone,
-//         };
-//       });
-//       return res.send(sendData);
-//     });
-//   }
-// );
-
 //@route GET cage/allCages
 //@desc get cages
 //@access Private

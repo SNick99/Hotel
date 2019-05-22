@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
-
+import { addProduct } from '../../redux/actions/productsActions';
 import { inputs } from '../../services/dataInputs';
 
 class AddProduct extends Component {
@@ -14,7 +14,10 @@ class AddProduct extends Component {
     this.dataInput = inputs.productInputs;
   }
 
-  onSubmit = values => console.log(values); //this.props.AddProduct(values);
+  onSubmit = values => {
+    values.employeeId = this.props.auth.employee.id;
+    this.props.addProduct(values);
+  };
 
   render() {
     return (
@@ -29,7 +32,7 @@ class AddProduct extends Component {
 }
 
 AddProduct.propTypes = {
-  //AddProduct: PropTypes.func.isRequired,
+  addProduct: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -41,6 +44,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps
-  // { AddProduct }
+  mapStateToProps,
+  { addProduct }
 )(AddProduct);

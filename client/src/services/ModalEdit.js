@@ -54,7 +54,6 @@ class ModalEdit extends React.Component {
                         InputLabelProps={{ shrink: true }}
                         required={item.req !== false ? true : false}
                         defaultValue={selected[item.name]}
-                        InputLabelProps={{ shrink: true }}
                         fullWidth
                       />
                     </Grid>

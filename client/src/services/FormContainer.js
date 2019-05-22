@@ -16,26 +16,6 @@ import { connect } from 'react-redux';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
-const currencies = [
-  //для чего это?
-  {
-    value: '1111',
-    label: '111'
-  },
-  {
-    value: '222',
-    label: '222'
-  },
-  {
-    value: '333',
-    label: '333'
-  },
-  {
-    value: '444',
-    label: '444'
-  }
-];
-
 const styles = {
   root: {
     width: '100%',
@@ -85,7 +65,7 @@ const FormContainer = props => {
                     </Grid>
                   ) : (
                     <Field
-                      key={`key${index}`}
+                      key={`keyasas${index}`}
                       name={item.name}
                       component={renderTextField}
                       select

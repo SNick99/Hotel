@@ -123,7 +123,6 @@ router.get(
           let data = item.invoiceProduct_products.reduce((sum, current) => {
             return {
               Amount: sum.Amount + current.Amount,
-              UnitPrice: sum.UnitPrice + current.UnitPrice,
             };
           });
           return {
@@ -132,7 +131,6 @@ router.get(
             NameOfProduct: item.NameOfProduct,
             PriceOfUnit: item.PriceOfUnit,
             Amount: data.Amount,
-            SumUnitPrice: data.UnitPrice,
           };
         });
         return res.send(sendData);
