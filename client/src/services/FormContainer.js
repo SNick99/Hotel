@@ -9,25 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from './helpers';
 import MenuItem from '@material-ui/core/MenuItem';
-
-const currencies = [
-  {
-    value: '1111',
-    label: '111'
-  },
-  {
-    value: '222',
-    label: '222'
-  },
-  {
-    value: '333',
-    label: '333'
-  },
-  {
-    value: '444',
-    label: '444'
-  }
-];
+import selectConfig from './selectConfig';
+//import validateRegisterInput from '../validation/register';
 
 const styles = {
   root: {
@@ -59,22 +42,26 @@ const FormContainer = props => {
         <Form
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={8} >
-                {dataInput.map((item, index) => (
-                  item.type !== 'select' ?
-                  <Grid item xs={12} key={`key${index}`}><br />
+            <form id="formid" onSubmit={handleSubmit}>
+              <Grid container spacing={8}>
+                {dataInput.map((item, index) =>
+                  item.type !== 'select' ? (
+                    <Grid item xs={12} key={`key${index}`}>
+                      <br />
+                      <Field
+                        name={item.name}
+                        component={renderTextField}
+                        label={item.label}
+                        type={item.type}
+                        helperText={item.helperText || ''}
+                        InputLabelProps={{ shrink: true }}
+                        required={item.req !== false ? true : false}
+                        fullWidth
+                      />
+                    </Grid>
+                  ) : (
                     <Field
-                      name={item.name}
-                      component={renderTextField}
-                      label={item.label}
-                      type={item.type}
-                      helperText={item.helperText || ''}
-                      InputLabelProps={{ shrink: true }}
-                      required={item.req!==false ? true : false}
-                      fullWidth
-                    />
-                  </Grid> : <Field
+                      key={`key${index}`}
                       name={item.name}
                       component={renderTextField}
                       select
@@ -82,14 +69,17 @@ const FormContainer = props => {
                       type={item.type}
                       helperText={item.helperText || ''}
                       InputLabelProps={{ shrink: true }}
-                      required={item.req!==false ? true : false}
+                      required={item.req !== false ? true : false}
                       fullWidth
-                    >{currencies.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))} </Field>
-                ))}
+                    >
+                      {selectConfig(item).map((option, i) => (
+                        <MenuItem key={option + i} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}{' '}
+                    </Field>
+                  )
+                )}
               </Grid>
               <br />
               <Button

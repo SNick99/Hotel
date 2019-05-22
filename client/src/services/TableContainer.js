@@ -20,7 +20,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     minHeight: '100%',
-    overflowX: 'auto'
+    overflow: 'auto'
   },
   search: {
     width: '20%',
@@ -41,7 +41,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
-    outline: 'none'
+    outline: 'none',
+    overflow: 'auto'
   }
 });
 
@@ -50,7 +51,6 @@ class TableContainer extends Component {
     super(props);
     this.state = {
       selected: '',
-      searchProp: this.props.searchProp,
       data: this.props.data,
       changed: this.props.data,
       page: 0,
@@ -63,19 +63,19 @@ class TableContainer extends Component {
     const searchedData = this.state.changed;
     this.setState({
       data: searchedData.filter(item =>
-        item[this.state.searchProp].includes(e.target.value)
+        item[this.props.searchProp].includes(e.target.value)
       )
     });
     // todo
   };
 
   handleOpenModal = (e, n) => {
-    this.props.handleEdit(e, n);
     this.setState({ modalOpen: true, selected: n });
   };
 
   handleCloseModal = n => {
     console.log(n); // data after changes
+    this.props.handleEdit('onCloseModal', n, this.state.selected);
     this.setState({ modalOpen: false });
   };
 
@@ -92,7 +92,14 @@ class TableContainer extends Component {
   }
 
   render() {
-    const { classes, rows, handleEdit, handleDelete, modalInputs } = this.props;
+    const {
+      classes,
+      rows,
+      handleEdit,
+      handleDelete,
+      searchProp,
+      modalInputs
+    } = this.props;
     const { rowsPerPage, page, data } = this.state;
     console.log('Data', data);
     const emptyRows =
@@ -115,8 +122,14 @@ class TableContainer extends Component {
           </div>
         </Modal>
         <TextField
-          label="Поиск"
-          type="search"
+          label={
+            searchProp !== 'EndDate' && searchProp !== 'WorkDate' ? 'Поиск' : ''
+          }
+          type={
+            searchProp !== 'EndDate' && searchProp !== 'WorkDate'
+              ? 'search'
+              : 'date'
+          }
           className={classes.search}
           margin="normal"
           onChange={e => this.handleSearch(e)}

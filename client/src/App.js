@@ -99,7 +99,6 @@ function App(props) {
               <Route path={'/product/addProduct'} exact component={AddProduct} />
               <Route path={'/schedule/allSchedules'} exact component={AllSchedules} />
               <Route path={'/schedule/addSchedule'} exact component={AddSchedule} />
-              
             </Switch>
           </div>
           <Footer />

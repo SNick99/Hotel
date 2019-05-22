@@ -2,59 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
+import { inputs } from '../../services/dataInputs';
 
 class AddProduct extends Component {
   constructor(props) {
     super(props);
-
     this.headerForm = 'Новый товар';
     this.submitLabel = 'Добавить';
-
-    this.dataInput = [
-        {
-          type: 'text',
-          label: 'Название',
-          name: 'NameOfProduct'
-        },
-        {
-          type: 'text',
-          label: 'Фирма',
-          name: 'NameFirma'
-        },
-        {
-          type: 'number',
-          label: 'Стоимость (продажа)',
-          name: 'PriceOfUnit'
-        },
-        {
-          type: 'number',
-          label: 'Стоимость (покупка)',
-          name: 'UnitPrice'
-        },
-        {
-          type: 'text',
-          label: 'Сотрудник',
-          name: 'Employee'
-        },
-        {
-          type: 'text',
-          label: 'Имя',
-          name: 'FirstName',
-          helperText: ''
-        },
-        {
-          type: 'text',
-          label: 'Фамилия',
-          name: 'LastName',
-          helperText: ''
-        },
-        {
-          type: 'number',
-          label: 'Телефон',
-          name: 'Phone',
-          helperText: ''
-        }
-      ];
+    this.dataInput = inputs.productInputs;
   }
 
   onSubmit = values => console.log(values); //this.props.AddProduct(values);

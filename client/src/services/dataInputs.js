@@ -118,53 +118,38 @@ export const inputs = {
       name: 'EndDate'
     },
     {
-      type: 'text',
-      label: 'Имя клиента',
-      name: 'FirstName'
+      type: 'select',
+      label: 'Клиент',
+      name: 'Client'
     },
     {
-      type: 'number',
-      label: 'Телефон',
-      name: 'Phone'
+      type: 'select',
+      label: 'Питомец',
+      name: 'Pet'
     },
     {
-      type: 'text',
-      label: 'Имя питомца',
-      name: 'PetName'
+      type: 'select',
+      label: 'Cотрудник',
+      name: 'Employee'
     },
     {
-      type: 'text',
-      label: 'Вид',
-      name: 'KindOfPet'
+      type: 'select',
+      label: 'Товар',
+      name: 'Product'
     },
     {
-      type: 'number',
-      label: 'Код',
-      name: 'PassportCode'
-    },
-    {
-      type: 'text',
-      label: 'Имя товара',
-      name: 'KindOfCage'
-    },
-    {
-      type: 'text',
-      label: 'Фирма клетки',
-      name: 'NameFirma'
-    },
-    {
-      type: 'text',
-      label: 'Тип клетки',
-      name: 'TypeOfCage'
+      type: 'select',
+      label: 'Клетка',
+      name: 'Cage'
     },
     {
       type: 'text',
       label: 'Доп. услуга',
-      name: 'ExtraService',
-      req: false
+      name: 'Extra',
+      req: false  // add this parametr if field is not required
     },
     {
-      type: 'number',
+      type: 'text',
       label: 'Цена доп. услуги',
       name: 'ExtraPrice',
       req: false
@@ -215,28 +200,16 @@ export const inputs = {
       helperText: ''
     }
   ],
-  scheduleInputs : [
+  scheduleInputs: [
     {
       type: 'date',
       label: 'Дата смены',
-      name: 'FirstName'
-    },
-    {
-      type: 'text',
-      label: 'Имя',
-      name: 'FirstName',
-      helperText: ''
-    },
-    {
-      type: 'text',
-      label: 'Фамилия',
-      name: 'LastName',
-      helperText: ''
+      name: 'WorkDate'
     },
     {
       type: 'select',
-      label: 'Телефон',
-      name: 'Phone',
+      label: 'Сотрудник',
+      name: 'Employee',
       helperText: ''
     }
   ]

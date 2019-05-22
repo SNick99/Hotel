@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
+import { parseItem } from './orderSelection';
 
 class AddOrder extends Component {
   constructor(props) {
@@ -12,7 +13,13 @@ class AddOrder extends Component {
     this.dataInput = inputs.orderInputs;
   }
 
-  onSubmit = values => console.log(values); //this.props.AddOrder(values);
+  onSubmit = values => {
+    console.log(values); // before parsin
+    const addData = parseItem(values);
+    console.log(addData); // after parsin
+
+
+  }; //this.props.AddOrder(values);
 
   render() {
     return (

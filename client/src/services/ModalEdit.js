@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 //import Typography from '@material-ui/core/Typography';
 import { renderTextField } from './helpers';
+import selectConfig from './selectConfig';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = {
   root: {
@@ -47,14 +49,34 @@ class ModalEdit extends React.Component {
                         label={item.label}
                         type={item.type}
                         helperText={item.helperText || ''}
-                        initialValue={selected[item.name]}
+                        defaultValue={selected[item.name]}
                         InputLabelProps={{ shrink: true }}
-                        required={item.req !== false ? true : false}
                         fullWidth
                       />
                     </Grid>
                   ) : (
-                    'BUTTTTTON'
+                    <Field
+                      key={`key${index}`}
+                      name={item.name}
+                      component={renderTextField}
+                      select
+                      value={selected[item.name]}
+                      label={`${item.label} (сейчас: ${selected[item.name] ||
+                        selected['FirstName'] +
+                          ' ' +
+                          selected['LastName'] +
+                          ' ' +
+                          selected['Phone']})`}
+                      type={item.type}
+                      helperText={item.helperText || ''}
+                      fullWidth
+                    >
+                      {selectConfig(item).map((option, i) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Field>
                   )
                 )}
               </Grid>

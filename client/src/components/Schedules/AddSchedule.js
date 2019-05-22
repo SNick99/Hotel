@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
+import { parseItem } from './scheduleSelection';
 
-class AddClient extends Component {
+class AddSchedule extends Component {
   constructor(props) {
     super(props);
     this.headerForm = 'Добавить в график';
@@ -12,7 +13,13 @@ class AddClient extends Component {
     this.dataInput = inputs.scheduleInputs;
   }
 
-  onSubmit = values => console.log(values); //this.props.AddClient(values);
+  onSubmit = values => {
+    console.log(values); // before parsin
+    const addData = parseItem(values);
+    console.log(addData); // after parsin
+
+
+  };//this.props.AddSchedule(values);
 
   render() {
     return (
@@ -26,8 +33,8 @@ class AddClient extends Component {
   }
 }
 
-AddClient.propTypes = {
-  //AddClient: PropTypes.func.isRequired,
+AddSchedule.propTypes = {
+  //AddSchedule: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -40,5 +47,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps
-  // { AddClient }
-)(AddClient);
+  // { AddSchedule }
+)(AddSchedule);
