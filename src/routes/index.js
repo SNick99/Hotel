@@ -3,6 +3,7 @@ import schedule from "./schedule";
 import cage from "./cage";
 import product from "./product";
 import client from "./client";
+import order from "./order";
 
 export default {
   employee,
@@ -10,4 +11,5 @@ export default {
   cage,
   product,
   client,
+  order,
 };

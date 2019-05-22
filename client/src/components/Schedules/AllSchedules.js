@@ -8,18 +8,20 @@ import { connect } from 'react-redux';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
 
+import { parseItem } from './scheduleSelection';
+
 let test = [
   {
-    Датасмены: '111',
-    Имя: '111',
-    Фамилия: '111',
-    Phone: '111'
+    WorkDate: '2019-05-16',
+    FirstName: '111emp',
+    LastName: '11lastname',
+    Phone: '111-11-11'
   },
   {
-    Датасмены: '111',
-    Имя: '222',
-    Фамилия: '222',
-    Phone: '222'
+    WorkDate: '2019-05-19',
+    FirstName: '222emp',
+    LastName: '22lastname',
+    Phone: '222-22-22'
   }
 ];
 
@@ -31,9 +33,11 @@ class AllSchedules extends Component {
     data: test //this.props.schedules
   };
 
-  handleEdit = item => {
-    console.log('to edit: ' + item.FirstName);
-    this.setState({ selected: item });
+  handleEdit = (e, item, old) => {
+    console.log(item); // to-parse input data
+    const changed = parseItem(item, old);
+    console.log(changed); // after-parse data
+    this.setState({ selected: changed });
   };
 
   handleDelete = item => {
@@ -51,7 +55,7 @@ class AllSchedules extends Component {
     return (
       <TableContainer
         rows={rows}
-        searchProp="Phone"
+        searchProp="WorkDate"
         data={this.state.data}
         allData={e => console.log('ex')} // AllSchedules from actions
         handleEdit={this.handleEdit}

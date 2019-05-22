@@ -7,6 +7,7 @@ export const renderTextField = ({
   label,
   placeholder,
   input,
+  value,
   meta: { touched, invalid, error },
   ...custom
 }) => (
@@ -14,6 +15,7 @@ export const renderTextField = ({
     type={type}
     name={name}
     label={label}
+    value={value}
     placeholder={placeholder}
     error={touched && error && true}
     helperText={touched && error}

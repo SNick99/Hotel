@@ -40,6 +40,7 @@ app.use("/schedule", routes.schedule);
 app.use("/cage", routes.cage);
 app.use("/product", routes.product);
 app.use("/client", routes.client);
+app.use("/order", routes.order);
 
 const PORT = process.env.PORT || 5000;
 

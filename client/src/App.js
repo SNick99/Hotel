@@ -113,6 +113,7 @@ function App(props) {
                 exact
                 component={AddSchedule}
               />
+
             </Switch>
           </div>
           <Footer />

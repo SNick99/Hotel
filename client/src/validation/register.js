@@ -12,7 +12,7 @@ const validateRegisterInput = data => {
     data.Password2 = !isEmpty(data.Password2) ? data.Password2 : '';
     data.Birthday = !isEmpty(data.Birthday) ? data.Birthday : '';
     data.Adress = !isEmpty(data.Adress) ? data.Adress : '';
-    data.StartDate = !isEmpty(data.StartDate) ? data.StartDate : '';
+    //data.StartDate = !isEmpty(data.StartDate) ? data.StartDate : '';
     data.Position = !isEmpty(data.Position) ? data.Position : '';
     data.SalaryChange = !isEmpty(data.SalaryChange) ? data.SalaryChange : '';
 

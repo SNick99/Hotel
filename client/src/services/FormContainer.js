@@ -9,6 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from './helpers';
 
+import selectConfig from './selectConfig';
+//import validateRegisterInput from '../validation/register';
+
 import { connect } from 'react-redux';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -63,7 +66,7 @@ const FormContainer = props => {
         <Form
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+            <form id="formid" onSubmit={handleSubmit}>
               <Grid container spacing={8}>
                 {dataInput.map((item, index) =>
                   item.type !== 'select' ? (
@@ -82,6 +85,7 @@ const FormContainer = props => {
                     </Grid>
                   ) : (
                     <Field
+                      key={`key${index}`}
                       name={item.name}
                       component={renderTextField}
                       select
@@ -92,9 +96,9 @@ const FormContainer = props => {
                       required={item.req !== false ? true : false}
                       fullWidth
                     >
-                      {currencies.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
+                      {selectConfig(item).map((option, i) => (
+                        <MenuItem key={option + i} value={option}>
+                          {option}
                         </MenuItem>
                       ))}{' '}
                     </Field>

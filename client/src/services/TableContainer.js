@@ -20,7 +20,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     minHeight: '100%',
-    overflowX: 'auto'
+    overflow: 'auto'
   },
   search: {
     width: '20%',
@@ -41,7 +41,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
-    outline: 'none'
+
+    outline: 'none',
+    overflow: 'auto'
   }
 });
 
@@ -50,9 +52,11 @@ class TableContainer extends Component {
     super(props);
     this.state = {
       selected: '',
+
       searchProp: this.props.searchProp,
       data: [],
       changed: '',
+
       page: 0,
       rowsPerPage: 5,
       modalOpen: false
@@ -73,6 +77,8 @@ class TableContainer extends Component {
 
   handleCloseModal = n => {
     console.log(n); // data after changes
+
+    this.props.handleEdit('onCloseModal', n, this.state.selected);
     this.setState({ modalOpen: false });
   };
 
@@ -95,7 +101,8 @@ class TableContainer extends Component {
   }
 
   render() {
-    const { classes, rows, handleEdit, handleDelete, modalInputs } = this.props;
+    const { classes, rows, handleDelete, searchProp, modalInputs } = this.props;
+
     const { rowsPerPage, page, data } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -116,8 +123,14 @@ class TableContainer extends Component {
           </div>
         </Modal>
         <TextField
-          label="Поиск"
-          type="search"
+          label={
+            searchProp !== 'EndDate' && searchProp !== 'WorkDate' ? 'Поиск' : ''
+          }
+          type={
+            searchProp !== 'EndDate' && searchProp !== 'WorkDate'
+              ? 'search'
+              : 'date'
+          }
           className={classes.search}
           margin="normal"
           onChange={e => this.handleSearch(e)}
@@ -141,7 +154,7 @@ class TableContainer extends Component {
                       <Tooltip title="Редактировать">
                         <IconButton
                           aria-label="Edit"
-                          onClick={e => handleEdit(n)}
+                          onClick={e => this.handleOpenModal(e, n)}
                         >
                           <Icon />
                         </IconButton>

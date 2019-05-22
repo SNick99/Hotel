@@ -28,7 +28,7 @@ router.post(
             req.context.models.cageOrder
               .create({
                 orderId: order.id,
-                cageId: req.body.productId,
+                cageId: req.body.cageId,
               })
               .then(() => {
                 req.context.models.services.create({

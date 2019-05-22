@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
+
 import { addClient } from '../../redux/actions/clientsAction';
+
 class AddClient extends Component {
   constructor(props) {
     super(props);

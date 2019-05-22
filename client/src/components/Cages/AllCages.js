@@ -5,23 +5,6 @@ import { allCages, deleteCage } from '../../redux/actions/cagesActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
 
-// let test = [
-//   {
-//     Название: '111',
-//     Фирма: '111',
-//     Тип: '111',
-//     Вид: '111',
-//     Цена: '111'
-//   },
-//   {
-//     Название: '222',
-//     Фирма: '222',
-//     Тип: '222',
-//     Вид: '222',
-//     Цена: '222'
-//   }
-// ];
-
 const rows = ['id', 'Фирма', 'Вид', 'Тип', 'Цена', 'Количество'];
 
 class AllCages extends Component {
