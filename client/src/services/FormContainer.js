@@ -8,13 +8,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from './helpers';
-
+import MenuItem from '@material-ui/core/MenuItem';
 import selectConfig from './selectConfig';
 //import validateRegisterInput from '../validation/register';
-
-import { connect } from 'react-redux';
-
-import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = {
   root: {
@@ -36,6 +32,7 @@ const styles = {
 
 const FormContainer = props => {
   const { classes, onSubmit, dataInput, headerForm, submitLabel } = props;
+  console.log(dataInput);
   return (
     <Paper className={classes.root}>
       <div className={classes.form}>
@@ -45,8 +42,14 @@ const FormContainer = props => {
         </Typography>
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
-            <form id="formid" onSubmit={handleSubmit}>
+          render={({ handleSubmit, form }) => (
+            <form
+              id="formid"
+              onSubmit={async event => {
+                await handleSubmit(event);
+                form.reset();
+              }}
+            >
               <Grid container spacing={8}>
                 {dataInput.map((item, index) =>
                   item.type !== 'select' ? (
@@ -65,7 +68,7 @@ const FormContainer = props => {
                     </Grid>
                   ) : (
                     <Field
-                      key={`keyasas${index}`}
+                      key={`key${index}`}
                       name={item.name}
                       component={renderTextField}
                       select
@@ -103,17 +106,7 @@ const FormContainer = props => {
 };
 
 FormContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
-  return {
-    auth: state.auth
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  {}
-)(withStyles(styles)(FormContainer));
+export default withStyles(styles)(FormContainer);

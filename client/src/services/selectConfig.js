@@ -58,9 +58,8 @@ const selectConfig = item => {
         item => `${item.NameOfProduct}\u00A0${item.NameFirma}`
       );
       break;
-    default:
-      return result;
   }
+  return result;
 };
 
 export default selectConfig;
