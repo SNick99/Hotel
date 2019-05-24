@@ -2,12 +2,10 @@
 
 // parse selected row (rows after displaing by orderView)
 export const parseItem = (item, old) => {
-  console.log(old);
   let cur = {
     WorkDate: '',
     Employee: {}
   };
-  console.log(item);
 
   cur['WorkDate'] = item['WorkDate'] ? item['WorkDate'] : old['WorkDate'];
   [

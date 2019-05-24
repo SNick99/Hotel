@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
 import { addProduct } from '../../redux/actions/productsActions';
 import { inputs } from '../../services/dataInputs';
+import { validatorProduct } from '../../validation/validators';
 
 class AddProduct extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class AddProduct extends Component {
         dataInput={this.dataInput}
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
+        validator={validatorProduct}
       />
     );
   }

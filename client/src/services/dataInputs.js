@@ -108,7 +108,6 @@ export const inputs = {
     {
       type: 'text',
       label: 'Имя питомца',
-
       name: 'NamePet'
     },
     {

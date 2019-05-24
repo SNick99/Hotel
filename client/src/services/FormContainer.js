@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { renderTextField } from './helpers';
 import MenuItem from '@material-ui/core/MenuItem';
 import selectConfig from './selectConfig';
+import { connect } from 'react-redux';
 //import validateRegisterInput from '../validation/register';
 
 const styles = {
@@ -31,7 +32,7 @@ const styles = {
 };
 
 const FormContainer = props => {
-  const { classes, onSubmit, dataInput, headerForm, submitLabel } = props;
+  const { classes, onSubmit, dataInput, headerForm, submitLabel, validator } = props;
   console.log(dataInput);
   return (
     <Paper className={classes.root}>
@@ -42,13 +43,14 @@ const FormContainer = props => {
         </Typography>
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, form }) => (
+          validate={validator}
+          render={({ handleSubmit, form, validating }) => (
             <form
               id="formid"
               onSubmit={async event => {
                 await handleSubmit(event);
-                form.reset();
-              }}
+                validating && form.reset();
+              }} noValidate
             >
               <Grid container spacing={8}>
                 {dataInput.map((item, index) =>
@@ -57,10 +59,10 @@ const FormContainer = props => {
                       <br />
                       <Field
                         name={item.name}
-                        component={renderTextField}
+                        render={renderTextField}
                         label={item.label}
                         type={item.type}
-                        helperText={item.helperText || ''}
+                       // helperText={item.helperText || ''}
                         InputLabelProps={{ shrink: true }}
                         required={item.req !== false ? true : false}
                         fullWidth
@@ -106,7 +108,17 @@ const FormContainer = props => {
 };
 
 FormContainer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FormContainer);
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(styles)(FormContainer));

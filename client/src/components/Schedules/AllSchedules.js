@@ -37,7 +37,7 @@ class AllSchedules extends Component {
     console.log(item); // to-parse input data
     const changed = parseItem(item, old);
     console.log(changed); // after-parse data
-    this.setState({ selected: item });
+    this.setState({ selected: changed });
   };
 
   handleDelete = item => {
