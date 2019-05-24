@@ -203,3 +203,16 @@ export const validatorSchedule = values => {
 
   return errors;
 };
+
+export const validatorLogin = values => {
+  const errors = {};
+
+  if (!values.Phone) {
+    errors.Phone = 'Поле дожно быть заполненно';
+  }
+  if (!values.Password) {
+    errors.Password = 'Поле дожно быть заполненно';
+  }
+
+  return errors;
+};
