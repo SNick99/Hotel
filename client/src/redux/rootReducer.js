@@ -10,10 +10,13 @@ import clientsReducer from './reducers/clientsReducer';
 
 import productsReducer from './reducers/productsReducer';
 
+import schedulesReducer from './reducers/schedulesReducer';
+
 export default combineReducers({
   auth: authReducer,
   employees: employeesReducer,
   cages: cageReducer,
   clients: clientsReducer,
-  products: productsReducer
+  products: productsReducer,
+  schedules: schedulesReducer
 });

@@ -28,12 +28,15 @@ const data3 = clients; // ...
 const data4 = pets;
 const data5 = products; //-------------------delete after dev
 
-const selectConfig = item => {
+const selectConfig = (item, data) => {
   let result = '';
   switch (item.name) {
     case 'Employee':
-      result = data1.map(
-        item => `${item.FirstName}\u00A0${item.LastName}\u00A0${item.Phone}`
+      result = data.map(
+        item =>
+          `${item.id}\u00A0${item.FirstName}\u00A0${item.LastName}\u00A0${
+            item.Phone
+          }`
       );
       break;
     case 'Cage':

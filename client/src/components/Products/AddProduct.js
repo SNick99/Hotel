@@ -16,6 +16,7 @@ class AddProduct extends Component {
   }
 
   onSubmit = values => {
+    console.log(values);
     values.employeeId = this.props.auth.employee.id;
     this.props.addProduct(values);
   };

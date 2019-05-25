@@ -28,36 +28,23 @@ const test = [
     NameFirma: '111firmacage',
     Extra: '111extra',
     ExtraPrice: '111extraprice'
-  },
-  {
-    EndDate: '2019-05-19',
-    FirstName: '222client',
-    LastName: '11lastname',
-    Phone: '222-22-22',
-    PetName: '222pet',
-    KindOfPet: '222kindofpet',
-    PassportCode: 'code2222222',
-    EFirstName: '222emp',
-    ELastName: '222',
-    EPhone: '222',
-    NameOfProduct: '222productname',
-    ProductNameFirma: '222firmaproduct',
-    KindOfCage: '222cage',
-    NameFirma: '222firmacage',
-    Extra: '222extra',
-    ExtraPrice: '222extraprice'
   }
 ];
 
 const rows = [
-  'Дата завершения',
-  'Клиент',
-  'Питомец',
-  'Cотрудник',
-  'Товар',
-  'Клетка',
-  'Дополнительная услуга',
-  'Цена доп. услуги'
+  'Начало',
+  'Завершение',
+  'Имя клиента',
+  'Телефон',
+  'Имя животного',
+  'Имя смотрителя',
+  'Телефон',
+  'Фирма клетки',
+  'Модель',
+  'Фирма продукта',
+  'Продукт',
+  'Доп. сервис',
+  'Сумма заказа'
 ];
 
 class AllOrders extends Component {

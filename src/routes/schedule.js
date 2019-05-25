@@ -1,6 +1,7 @@
 import { Router } from "express";
 const router = Router();
 const passport = require("passport");
+const moment = require("moment");
 
 //@route POST schedule/addSchedule
 //@desc add schedule
@@ -9,16 +10,17 @@ router.post(
   "/addSchedule",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log("fffff", moment(req.body.DateChange).format("YYYY-MM-DD"));
     req.context.models.schedule
       .findOne({
         where: {
-          DateChange: req.body.DateChange,
+          DateChange: moment(req.body.DateChange).format("YYYY-MM-DD"),
           employeeId: req.body.employeeId,
         },
       })
       .then(item => {
         if (item) {
-          res.send("Работник уже был добавлен на эту дату");
+          res.status(500).send("Работник уже был добавлен на эту дату");
         } else {
           req.context.models.schedule
             .create({
@@ -30,6 +32,28 @@ router.post(
             });
         }
       });
+  }
+);
+
+//@route GET schedule/allSchedules
+//@desc get schedules
+//@access Private
+router.get(
+  "/addSchedule",
+
+  (req, res) => {
+    req.context.models.employee.findAll().then(projects => {
+      const sendData = projects.map(item => {
+        return {
+          id: item.id,
+          FirstName: item.FirstName,
+          LastName: item.LastName,
+          Phone: item.Phone,
+        };
+      });
+
+      return res.send(sendData);
+    });
   }
 );
 
@@ -52,6 +76,7 @@ router.get(
       .then(projects => {
         const sendData = projects.map(item => {
           return {
+            id: item.id,
             FirstName: item.employee.FirstName,
             LastName: item.employee.LastName,
             Phone: item.employee.Phone,
@@ -106,7 +131,7 @@ router.put(
   (req, res) => {
     req.context.models.schedule
       .findOne({
-        where: { id: req.params.id },
+        where: { employeeId: req.params.id },
       })
       .then(schedule => {
         schedule
@@ -126,6 +151,7 @@ router.put(
               .then(projects => {
                 const sendData = projects.map(item => {
                   return {
+                    id: item.id,
                     FirstName: item.employee.FirstName,
                     LastName: item.employee.LastName,
                     Phone: item.employee.Phone,

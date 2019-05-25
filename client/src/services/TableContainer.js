@@ -101,7 +101,15 @@ class TableContainer extends Component {
   }
 
   render() {
-    const { classes, rows, handleDelete, searchProp, modalInputs } = this.props;
+    const {
+      classes,
+      rows,
+      handleDelete,
+      searchProp,
+      modalInputs,
+      forSelectConfig,
+      onSubmit
+    } = this.props;
 
     const { rowsPerPage, page, data } = this.state;
     const emptyRows =
@@ -119,15 +127,19 @@ class TableContainer extends Component {
               selected={this.state.selected}
               dataInput={modalInputs}
               onSubmit={this.handleCloseModal}
+              forSelectConfig={forSelectConfig}
+              onSubmit={onSubmit}
             />
           </div>
         </Modal>
         <TextField
           label={
-            searchProp !== 'EndDate' && searchProp !== 'WorkDate' ? 'Поиск' : ''
+            searchProp !== 'EndDate' && searchProp !== 'DateChange'
+              ? 'Поиск'
+              : ''
           }
           type={
-            searchProp !== 'EndDate' && searchProp !== 'WorkDate'
+            searchProp !== 'EndDate' && searchProp !== 'DateChange'
               ? 'search'
               : 'date'
           }

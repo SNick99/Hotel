@@ -194,8 +194,8 @@ export const validatorOrder = values => {
 export const validatorSchedule = values => {
   const errors = {};
 
-  if (!values.WorkDate) {
-    errors.WorkDate = 'Поле дожно быть заполненно';
+  if (!values.DateChange) {
+    errors.DateChange = 'Поле дожно быть заполненно';
   }
   if (!values.Employee) {
     errors.Employee = 'Поле дожно быть заполненно';

@@ -199,7 +199,7 @@ export const inputs = {
       type: 'date',
       label: 'Дата смены',
 
-      name: 'WorkDate'
+      name: 'DateChange'
     },
     {
       type: 'select',

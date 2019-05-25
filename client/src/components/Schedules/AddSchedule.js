@@ -5,6 +5,10 @@ import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
 import { parseItem } from './scheduleSelection';
 import { validatorSchedule } from '../../validation/validators';
+import {
+  addSchedule,
+  allEmployeeSchedules
+} from '../../redux/actions/schedulesActions';
 
 class AddSchedule extends Component {
   constructor(props) {
@@ -15,11 +19,17 @@ class AddSchedule extends Component {
   }
 
   onSubmit = values => {
-    console.log(values); // before parsin
-    const addData = parseItem(values);
-    console.log(addData); // after parsin
-  }; //this.props.AddSchedule(values);
+    const sendData = {
+      DateChange: values.DateChange,
+      employeeId: values.Employee[0]
+    };
 
+    this.props.addSchedule(sendData);
+  };
+
+  componentDidMount() {
+    this.props.allEmployeeSchedules();
+  }
   render() {
     return (
       <FormContainer
@@ -28,24 +38,27 @@ class AddSchedule extends Component {
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
         validator={validatorSchedule}
+        forSelectConfig={this.props.employees}
       />
     );
   }
 }
 
 AddSchedule.propTypes = {
-  //AddSchedule: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  addSchedule: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  employees: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => {
   console.log(state.auth);
   return {
-    auth: state.auth
+    auth: state.auth,
+    employees: state.schedules.employees
   };
 };
 
 export default connect(
-  mapStateToProps
-  // { AddSchedule }
+  mapStateToProps,
+  { addSchedule, allEmployeeSchedules }
 )(AddSchedule);

@@ -3,12 +3,15 @@
 // parse selected row (rows after displaing by orderView)
 export const parseItem = (item, old) => {
   let cur = {
-    WorkDate: '',
+    DateChange: '',
     Employee: {}
   };
 
-  cur['WorkDate'] = item['WorkDate'] ? item['WorkDate'] : old['WorkDate'];
+  cur['DateChange'] = item['DateChange']
+    ? item['DateChange']
+    : old['DateChange'];
   [
+    cur['Employee']['id'],
     cur['Employee']['FirstName'],
     cur['Employee']['LastName'],
     cur['Employee']['Phone']
@@ -17,7 +20,7 @@ export const parseItem = (item, old) => {
         .split(' ')
         .join('')
         .split(/\s/)
-    : [old['FirstName'], old['LastName'], old['Phone']];
+    : [old['id'], old['FirstName'], old['LastName'], old['Phone']];
 
   return cur;
 };

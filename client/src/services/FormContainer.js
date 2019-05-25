@@ -32,7 +32,15 @@ const styles = {
 };
 
 const FormContainer = props => {
-  const { classes, onSubmit, dataInput, headerForm, submitLabel, validator } = props;
+  const {
+    classes,
+    onSubmit,
+    dataInput,
+    headerForm,
+    submitLabel,
+    validator,
+    forSelectConfig
+  } = props;
   console.log(dataInput);
   return (
     <Paper className={classes.root}>
@@ -50,7 +58,8 @@ const FormContainer = props => {
               onSubmit={async event => {
                 await handleSubmit(event);
                 validating && form.reset();
-              }} noValidate
+              }}
+              noValidate
             >
               <Grid container spacing={8}>
                 {dataInput.map((item, index) =>
@@ -62,7 +71,7 @@ const FormContainer = props => {
                         render={renderTextField}
                         label={item.label}
                         type={item.type}
-                       // helperText={item.helperText || ''}
+                        // helperText={item.helperText || ''}
                         InputLabelProps={{ shrink: true }}
                         required={item.req !== false ? true : false}
                         fullWidth
@@ -81,7 +90,7 @@ const FormContainer = props => {
                       required={item.req !== false ? true : false}
                       fullWidth
                     >
-                      {selectConfig(item).map((option, i) => (
+                      {selectConfig(item, forSelectConfig).map((option, i) => (
                         <MenuItem key={option + i} value={option}>
                           {option}
                         </MenuItem>

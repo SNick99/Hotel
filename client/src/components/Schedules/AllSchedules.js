@@ -1,36 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-/*import {
-  AllSchedules,
-  deleteCage
-} from '../../redux/actions/schedulesActions';*/
+import {
+  allSchedules,
+  deleteSchedule,
+  updateSchedule,
+  allEmployeeSchedules
+} from '../../redux/actions/schedulesActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
 
 import { parseItem } from './scheduleSelection';
 
-let test = [
-  {
-    WorkDate: '2019-05-16',
-    FirstName: '111emp',
-    LastName: '11lastname',
-    Phone: '111-11-11'
-  },
-  {
-    WorkDate: '2019-05-19',
-    FirstName: '222emp',
-    LastName: '22lastname',
-    Phone: '222-22-22'
-  }
-];
-
-const rows = ['Дата смены', 'Имя', 'Фамилия', 'Телефон'];
+const rows = ['id', 'Имя', 'Фамилия', 'Телефон', 'Дата смены'];
 
 class AllSchedules extends Component {
   state = {
     selected: '',
-    data: test //this.props.schedules
+    data: this.props.schedules
   };
 
   handleEdit = (e, item, old) => {
@@ -42,45 +29,58 @@ class AllSchedules extends Component {
 
   handleDelete = item => {
     console.log(`Удалено задание с id ${item}`);
-    // return this.props.deleteSchedule(item);
+    return this.props.deleteSchedule(item);
   };
+  onSubmit = values => {
+    const sendData = {
+      DateChange: values.DateChange,
+      employeeId: values.Employee[0]
+    };
 
+    this.props.updateSchedule(sendData);
+  };
   componentDidMount() {
-    // this.props.AllSchedules();
+    this.props.allSchedules();
+    this.props.allEmployeeSchedules();
   }
 
   render() {
-    console.log('Data', this.state.data);
+    console.log('Data', this.props.schedules);
 
     return (
       <TableContainer
         rows={rows}
-        searchProp="WorkDate"
-        data={this.state.data}
-        allData={e => console.log('ex')} // AllSchedules from actions
+        searchProp="DateChange"
+        data={this.props.schedules}
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
         modalInputs={inputs.scheduleInputs}
+        forSelectConfig={this.props.employees}
+        onSubmit={this.onSubmit}
       />
     );
   }
 }
 
 AllSchedules.propTypes = {
-  auth: PropTypes.object.isRequired
-  //schedules: PropTypes.object.isRequired
-  //AllSchedules: PropTypes.func.isRequired,
-  //deleteClient: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  schedules: PropTypes.array.isRequired,
+  allSchedules: PropTypes.func.isRequired,
+  deleteSchedule: PropTypes.func.isRequired,
+  updateSchedule: PropTypes.func.isRequired,
+  allEmployeeSchedules: PropTypes.func.isRequired,
+  employees: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth
-    // schedules: state.schedules
+    auth: state.auth,
+    schedules: state.schedules.schedules,
+    employees: state.schedules.employees
   };
 };
 
 export default connect(
-  mapStateToProps
-  //{ AllSchedules, deleteCage }
+  mapStateToProps,
+  { allSchedules, deleteSchedule, updateSchedule, allEmployeeSchedules }
 )(AllSchedules);

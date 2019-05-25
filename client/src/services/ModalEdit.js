@@ -29,7 +29,13 @@ const styles = {
 
 class ModalEdit extends React.Component {
   render() {
-    const { selected, classes, onSubmit, dataInput } = this.props;
+    const {
+      selected,
+      classes,
+      onSubmit,
+      dataInput,
+      forSelectConfig
+    } = this.props;
     console.log(selected);
     return (
       <div className={classes.form}>
@@ -71,7 +77,7 @@ class ModalEdit extends React.Component {
                       helperText={item.helperText || ''}
                       fullWidth
                     >
-                      {selectConfig(item).map((option, i) => (
+                      {selectConfig(item, forSelectConfig).map((option, i) => (
                         <MenuItem key={option} value={option}>
                           {option}
                         </MenuItem>
