@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
-
 import { addClient } from '../../redux/actions/clientsAction';
+import { validatorClient } from '../../validation/validators';
 
 class AddClient extends Component {
   constructor(props) {
@@ -23,6 +23,7 @@ class AddClient extends Component {
         dataInput={this.dataInput}
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
+        validator={validatorClient}
       />
     );
   }

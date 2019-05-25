@@ -7,16 +7,17 @@ import { connect } from 'react-redux';
 import { registerEmployee } from '../../redux/actions/authActions';
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
+import { validatorEmployee } from '../../validation/validators';
 
 class AddEmployee extends Component {
-  constructor(props) {
+  constructor(props) { 
     super(props);
 
     this.headerForm = 'Регистрация';
     this.submitLabel = 'Зарегистрировать';
     this.dataInput = inputs.employeeInputs;
   }
-  onSubmit = values => this.props.registerEmployee(values);
+  onSubmit = values =>{console.log(values); this.props.registerEmployee(values);}
 
   render() {
     return (
@@ -25,6 +26,7 @@ class AddEmployee extends Component {
         dataInput={this.dataInput}
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
+        validator={validatorEmployee}
       />
     );
   }

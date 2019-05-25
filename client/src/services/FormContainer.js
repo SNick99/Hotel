@@ -8,13 +8,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { renderTextField } from './helpers';
-
-import selectConfig from './selectConfig';
-//import validateRegisterInput from '../validation/register';
-
-import { connect } from 'react-redux';
-
 import MenuItem from '@material-ui/core/MenuItem';
+import selectConfig from './selectConfig';
+import { connect } from 'react-redux';
+//import validateRegisterInput from '../validation/register';
 
 const styles = {
   root: {
@@ -35,7 +32,8 @@ const styles = {
 };
 
 const FormContainer = props => {
-  const { classes, onSubmit, dataInput, headerForm, submitLabel } = props;
+  const { classes, onSubmit, dataInput, headerForm, submitLabel, validator } = props;
+  console.log(dataInput);
   return (
     <Paper className={classes.root}>
       <div className={classes.form}>
@@ -45,8 +43,15 @@ const FormContainer = props => {
         </Typography>
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
-            <form id="formid" onSubmit={handleSubmit}>
+          validate={validator}
+          render={({ handleSubmit, form, validating }) => (
+            <form
+              id="formid"
+              onSubmit={async event => {
+                await handleSubmit(event);
+                validating && form.reset();
+              }} noValidate
+            >
               <Grid container spacing={8}>
                 {dataInput.map((item, index) =>
                   item.type !== 'select' ? (
@@ -54,10 +59,10 @@ const FormContainer = props => {
                       <br />
                       <Field
                         name={item.name}
-                        component={renderTextField}
+                        render={renderTextField}
                         label={item.label}
                         type={item.type}
-                        helperText={item.helperText || ''}
+                       // helperText={item.helperText || ''}
                         InputLabelProps={{ shrink: true }}
                         required={item.req !== false ? true : false}
                         fullWidth
@@ -65,7 +70,7 @@ const FormContainer = props => {
                     </Grid>
                   ) : (
                     <Field
-                      key={`keyasas${index}`}
+                      key={`key${index}`}
                       name={item.name}
                       component={renderTextField}
                       select

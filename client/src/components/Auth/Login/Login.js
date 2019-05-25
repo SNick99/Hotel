@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { loginEmployee } from '../../../redux/actions/authActions';
 // import validateLoginInput from '../../../validation/login';
 import FormContainer from '../../../services/FormContainer';
+import { validatorLogin } from '../../../validation/validators';
 
 class Login extends Component {
   constructor(props) {
@@ -55,6 +56,7 @@ class Login extends Component {
         onSubmit={this.onSubmit}
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
+        validator={validatorLogin}
       />
     );
   }

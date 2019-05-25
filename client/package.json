@@ -17,6 +17,7 @@
     "jwt-decode": "^2.2.0",
     "lint-staged": "^8.1.6",
     "material-ui": "^1.0.0-beta.47",
+    "material-ui-icons": "^1.0.0-beta.36",
     "prettier": "^1.17.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -26,7 +27,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "validator": "^11.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,7 +40,11 @@
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

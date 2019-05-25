@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
-
 import { parseItem } from './orderSelection';
+import { validatorOrder } from '../../validation/validators';
 
 class AddOrder extends Component {
   constructor(props) {
@@ -27,6 +27,7 @@ class AddOrder extends Component {
         dataInput={this.dataInput}
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
+        validator={validatorOrder}
       />
     );
   }

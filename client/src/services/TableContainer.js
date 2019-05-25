@@ -71,14 +71,14 @@ class TableContainer extends Component {
   };
 
   handleOpenModal = (e, n) => {
-    this.props.handleEdit(e, n);
+    this.props.handleEdit(e, n, []);
     this.setState({ modalOpen: true, selected: n });
   };
 
   handleCloseModal = n => {
     console.log(n); // data after changes
-
     this.props.handleEdit('onCloseModal', n, this.state.selected);
+    console.log(this.state.selected);
     this.setState({ modalOpen: false });
   };
 

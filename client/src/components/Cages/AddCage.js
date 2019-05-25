@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { addCage } from '../../redux/actions/cagesActions';
-
 import FormContainer from '../../services/FormContainer';
 import { inputs } from '../../services/dataInputs';
+import { validatorCage } from '../../validation/validators';
 
 class AddCage extends Component {
   constructor(props) {
@@ -27,6 +26,7 @@ class AddCage extends Component {
         dataInput={this.dataInput}
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
+        validator={validatorCage}
       />
     );
   }
