@@ -61,6 +61,7 @@ const selectConfig = item => {
     default:
       return result;
   }
+  return result;
 };
 
 export default selectConfig;
