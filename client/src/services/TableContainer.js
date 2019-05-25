@@ -17,6 +17,13 @@ import Modal from '@material-ui/core/Modal';
 import ModalEdit from './ModalEdit';
 
 const styles = theme => ({
+  overrides: {
+    MuiTableCell: {
+      paddingDefault: {
+        padding: '6px'
+      }
+    }
+  },
   root: {
     width: '100%',
     minHeight: '100%',
@@ -41,7 +48,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
-
     outline: 'none',
     overflow: 'auto'
   }
@@ -52,11 +58,9 @@ class TableContainer extends Component {
     super(props);
     this.state = {
       selected: '',
-
       searchProp: this.props.searchProp,
       data: [],
       changed: '',
-
       page: 0,
       rowsPerPage: 5,
       modalOpen: false
@@ -82,7 +86,7 @@ class TableContainer extends Component {
     this.setState({ modalOpen: false });
   };
 
-  handleChangePage = page => {
+  handleChangePage = (e, page) => {
     this.setState({ page });
   };
 
@@ -102,7 +106,6 @@ class TableContainer extends Component {
 
   render() {
     const { classes, rows, handleDelete, searchProp, modalInputs } = this.props;
-
     const { rowsPerPage, page, data } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -144,13 +147,13 @@ class TableContainer extends Component {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={classes.table}>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((n, i) => {
                 return (
-                  <TableRow hover key={i}>
-                    <TableCell>
+                  <TableRow hover key={i} width="auto">
+                    <TableCell padding="none">
                       <Tooltip title="Редактировать">
                         <IconButton
                           aria-label="Edit"
@@ -161,11 +164,11 @@ class TableContainer extends Component {
                       </Tooltip>
                     </TableCell>
                     {Object.values(n).map((value, i) => (
-                      <TableCell key={i} align="left">
+                      <TableCell padding="dense" key={i} align="left">
                         {value}
                       </TableCell>
                     ))}
-                    <TableCell>
+                    <TableCell padding="none">
                       <Tooltip title="Удалить">
                         <IconButton
                           aria-label="Delete"
