@@ -4,6 +4,16 @@ const passport = require("passport");
 import moment from "moment";
 const Today = moment().format("YYYY-MM-DD");
 
+import Sequelize from "sequelize";
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.DATABASE_USER,
+  process.env.DATABASE_PASSWORD,
+  {
+    dialect: "postgres",
+  }
+);
+
 //@route POST order/addOrder
 //@desc add order
 //@access Private
@@ -73,6 +83,28 @@ router.get(
   "/addOrder",
 
   (req, res) => {
+    sequelize
+      .query(
+        `--CREATE OR REPLACE FUNCTION Date_Check_F1() RETURNS TRIGGER
+         --AS $$
+        -- declare
+        -- BEGIN
+        -- IF (NEW."EndDate" < CURRENT_DATE)
+        -- THEN RAISE EXCEPTION
+        -- 'Отрицательная дата, давай по новой';
+        -- END IF;
+        --  RETURN NEW;
+        -- END;
+        --  $$ LANGUAGE plpgSQL;
+          --DROP TRIGGER Date_Check1 ON orders;
+        --  CREATE TRIGGER Date_Check1 BEFORE INSERT OR UPDATE ON orders
+        --  FOR EACH ROW EXECUTE PROCEDURE Date_Check_F1();
+          `,
+        { type: sequelize.QueryTypes.SELECT }
+      )
+      .then(users => {
+        console.log(users);
+      });
     const sendData = {};
     req.context.models.employee
       .findAll()

@@ -2,6 +2,15 @@ import { Router } from "express";
 const router = Router();
 const passport = require("passport");
 const moment = require("moment");
+import Sequelize from "sequelize";
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.DATABASE_USER,
+  process.env.DATABASE_PASSWORD,
+  {
+    dialect: "postgres",
+  }
+);
 
 //@route POST schedule/addSchedule
 //@desc add schedule
@@ -10,7 +19,6 @@ router.post(
   "/addSchedule",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("fffff", moment(req.body.DateChange).format("YYYY-MM-DD"));
     req.context.models.schedule
       .findOne({
         where: {
@@ -42,6 +50,29 @@ router.get(
   "/addSchedule",
 
   (req, res) => {
+    sequelize
+      .query(
+        `--CREATE OR REPLACE FUNCTION Date_Check_F() RETURNS TRIGGER
+         --AS $$
+         --declare
+         --BEGIN
+         --IF (NEW."DateChange" < CURRENT_DATE)
+         --THEN RAISE EXCEPTION
+         --'Отрицательная дата, давай по новой';
+         --END IF;
+         -- RETURN NEW;
+         --END;
+         -- $$ LANGUAGE plpgSQL;
+         -- DROP TRIGGER Date_Check ON schedules;
+         -- CREATE TRIGGER Date_Check BEFORE INSERT OR UPDATE ON schedules
+         -- FOR EACH ROW EXECUTE PROCEDURE Date_Check_F();
+          `,
+        { type: sequelize.QueryTypes.SELECT }
+      )
+      .then(users => {
+        console.log(users);
+      });
+
     req.context.models.employee.findAll().then(projects => {
       const sendData = projects.map(item => {
         return {

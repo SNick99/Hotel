@@ -44,12 +44,13 @@ const styles = {
   }
 };
 
+let decoded = '';
 // check for token
 if (localStorage.jwtToken) {
   // Set auth token  header auth
   setAuthToken(localStorage.jwtToken);
   // Decoded token and get info employee and ex
-  const decoded = jwt_decode(localStorage.jwtToken);
+  decoded = jwt_decode(localStorage.jwtToken);
   // Set emploee and isAuthenticated
 
   store.dispatch(setCurrentEmployee(decoded));
@@ -65,61 +66,219 @@ if (localStorage.jwtToken) {
   }
 }
 
-function App(props) {
-  const { classes } = props;
+class App extends React.Component {
+  render() {
+    const { classes } = this.props;
 
-  return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <div className={classes.container}>
-          <Navbar />
-          <div className={classes.centerBlock}>
-            <Route path={'/'} exact component={Landing} />
-            <Switch>
-              <Route path={'/employee/login'} exact component={Login} />
-              <Route
-                path={'/employee/addEmployee'}
-                exact
-                component={AddEmployee}
-              />
-              <Route
-                path={'/employee/allEmployees'}
-                exact
-                component={Employees}
-              />
-              <Route path={'/cage/allCages'} exact component={AllCages} />
-              <Route path={'/cage/addCage'} exact component={AddCage} />
-              <Route path={'/client/allClients'} exact component={AllClients} />
-              <Route path={'/client/addClient'} exact component={AddClient} />
-              <Route path={'/order/allOrders'} exact component={AllOrders} />
-              <Route path={'/order/addOrder'} exact component={AddOrder} />
-              <Route
-                path={'/product/allProducts'}
-                exact
-                component={AllProducts}
-              />
-              <Route
-                path={'/product/addProduct'}
-                exact
-                component={AddProduct}
-              />
-              <Route
-                path={'/schedule/allSchedules'}
-                exact
-                component={AllSchedules}
-              />
-              <Route
-                path={'/schedule/addSchedule'}
-                exact
-                component={AddSchedule}
-              />
-            </Switch>
+    return (
+      <Provider store={store}>
+        <BrowserRouter>
+          <div className={classes.container}>
+            <Navbar />
+            <div className={classes.centerBlock}>
+              <Route path={'/'} exact component={Landing} />
+              {decoded.Position === 'Директор' ? (
+                <Switch>
+                  <Route path={'/employee/login'} exact component={Login} />
+                  <Route
+                    path={'/employee/addEmployee'}
+                    exact
+                    component={AddEmployee}
+                  />
+                  <Route
+                    path={'/employee/allEmployees'}
+                    exact
+                    component={Employees}
+                  />
+                  <Route path={'/cage/allCages'} exact component={AllCages} />
+                  <Route path={'/cage/addCage'} exact component={AddCage} />
+                  <Route
+                    path={'/client/allClients'}
+                    exact
+                    component={AllClients}
+                  />
+                  <Route
+                    path={'/client/addClient'}
+                    exact
+                    component={AddClient}
+                  />
+                  <Route
+                    path={'/order/allOrders'}
+                    exact
+                    component={AllOrders}
+                  />
+                  <Route path={'/order/addOrder'} exact component={AddOrder} />
+                  <Route
+                    path={'/product/allProducts'}
+                    exact
+                    component={AllProducts}
+                  />
+                  <Route
+                    path={'/product/addProduct'}
+                    exact
+                    component={AddProduct}
+                  />
+                  <Route
+                    path={'/schedule/allSchedules'}
+                    exact
+                    component={AllSchedules}
+                  />
+                  <Route
+                    path={'/schedule/addSchedule'}
+                    exact
+                    component={AddSchedule}
+                  />
+                </Switch>
+              ) : null}
+              {decoded.Position === 'Менеджер' ? (
+                <Switch>
+                  <Route path={'/employee/login'} exact component={Login} />
+                  <Route
+                    path={'/employee/addEmployee'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Менеджер</div>
+                    )}
+                  />
+                  <Route
+                    path={'/employee/allEmployees'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Менеджер</div>
+                    )}
+                  />
+                  <Route path={'/cage/allCages'} exact component={AllCages} />
+                  <Route path={'/cage/addCage'} exact component={AddCage} />
+                  <Route
+                    path={'/client/allClients'}
+                    exact
+                    component={AllClients}
+                  />
+                  <Route
+                    path={'/client/addClient'}
+                    exact
+                    component={AddClient}
+                  />
+                  <Route
+                    path={'/order/allOrders'}
+                    exact
+                    component={AllOrders}
+                  />
+                  <Route path={'/order/addOrder'} exact component={AddOrder} />
+                  <Route
+                    path={'/product/allProducts'}
+                    exact
+                    component={AllProducts}
+                  />
+                  <Route
+                    path={'/product/addProduct'}
+                    exact
+                    component={AddProduct}
+                  />
+                  <Route
+                    path={'/schedule/allSchedules'}
+                    exact
+                    component={AllSchedules}
+                  />
+                  <Route
+                    path={'/schedule/addSchedule'}
+                    exact
+                    component={AddSchedule}
+                  />
+                </Switch>
+              ) : null}
+              {decoded.Position === 'Смотритель' ? (
+                <Switch>
+                  <Route path={'/employee/login'} exact component={Login} />
+                  <Route
+                    path={'/employee/addEmployee'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/employee/allEmployees'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/cage/allCages'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/cage/addCage'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/client/allClients'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/client/addClient'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/order/allOrders'}
+                    exact
+                    component={AllOrders}
+                  />
+                  <Route
+                    path={'/order/addOrder'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/product/allProducts'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/product/addProduct'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                  <Route
+                    path={'/schedule/allSchedules'}
+                    exact
+                    component={AllSchedules}
+                  />
+                  <Route
+                    path={'/schedule/addSchedule'}
+                    exact
+                    render={() => (
+                      <div>У вас нет прав доступа. Вы простой Смотритель</div>
+                    )}
+                  />
+                </Switch>
+              ) : null}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </Provider>
-  );
+        </BrowserRouter>
+      </Provider>
+    );
+  }
 }
 
 export default withStyles(styles)(App);

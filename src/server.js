@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   req.context = {
     models,
+    sequelize,
     //me: await models.User.findByLogin("Dima"),
   };
 
