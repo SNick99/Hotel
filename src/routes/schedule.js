@@ -110,6 +110,7 @@ router.delete(
           .then(projects => {
             const sendData = projects.map(item => {
               return {
+                id: item.id,
                 FirstName: item.employee.FirstName,
                 LastName: item.employee.LastName,
                 Phone: item.employee.Phone,
@@ -131,13 +132,12 @@ router.put(
   (req, res) => {
     req.context.models.schedule
       .findOne({
-        where: { employeeId: req.params.id },
+        where: { id: req.params.id },
       })
       .then(schedule => {
         schedule
           .update({
             DateChange: req.body.DateChange,
-            employeeId: req.body.employeeId,
           })
           .then(() => {
             return req.context.models.schedule

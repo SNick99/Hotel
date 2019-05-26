@@ -19,7 +19,7 @@ export const allSchedules = data => dispatch => {
 };
 
 export const allEmployeeSchedules = data => dispatch => {
-  axios
+  return axios
     .get('/schedule/addSchedule', data)
     .then(res => {
       console.log('Action allSchedules', res.data);
@@ -71,7 +71,7 @@ export const deleteSchedule = data => dispatch => {
 export const updateSchedule = data => dispatch => {
   console.log(data);
   axios
-    .put(`/schedule/allSchedules/${data.employeeId}`, data)
+    .put(`/schedule/allSchedules/${data.id}`, data)
     .then(res =>
       dispatch({
         type: actionType.UPDATE_SCHEDULE_SUCSSES,
@@ -80,8 +80,7 @@ export const updateSchedule = data => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: actionType.UPDATE_SCHEDULE_FAILER,
-        payload: err.response.data
+        type: actionType.UPDATE_SCHEDULE_FAILER
       })
     );
 };

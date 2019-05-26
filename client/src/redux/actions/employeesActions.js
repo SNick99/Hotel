@@ -27,3 +27,19 @@ export const deleteEmployee = data => dispatch => {
     )
     .catch(err => console.log(err));
 };
+
+export const updateEmployee = data => dispatch => {
+  axios
+    .put(`/employee/allEmployees/${data.id}`, data)
+    .then(res =>
+      dispatch({
+        type: actionType.UPDATE_EMPLOYEE_SUCSSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionType.UPDATE_EMPLOYEE_FAILER
+      })
+    );
+};

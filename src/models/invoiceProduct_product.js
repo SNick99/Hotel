@@ -34,7 +34,11 @@ let invoiceProduct_product = (sequelize, DataTypes) => {
 
   InvoiceProduct_product.associate = models => {
     InvoiceProduct_product.belongsTo(models.invoiceProduct);
-    InvoiceProduct_product.belongsTo(models.product, { onDelete: "SET NULL" });
+    InvoiceProduct_product.belongsTo(
+      models.product,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
   };
 
   return InvoiceProduct_product;

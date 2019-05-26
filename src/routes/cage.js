@@ -216,7 +216,6 @@ router.put(
       .then(cage => {
         cage
           .update({
-            NameFirma: req.body.NameFirma,
             PriceOfDay: req.body.PriceOfDay,
           })
           .then(() => {

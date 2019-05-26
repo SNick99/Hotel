@@ -82,7 +82,7 @@ class TableContainer extends Component {
     this.setState({ modalOpen: false });
   };
 
-  handleChangePage = page => {
+  handleChangePage = (e, page) => {
     this.setState({ page });
   };
 
@@ -108,7 +108,10 @@ class TableContainer extends Component {
       searchProp,
       modalInputs,
       forSelectConfig,
-      onSubmit
+      onSubmit,
+      edit,
+      delete: deleteCheck,
+      validatorModal
     } = this.props;
 
     const { rowsPerPage, page, data } = this.state;
@@ -129,6 +132,7 @@ class TableContainer extends Component {
               onSubmit={this.handleCloseModal}
               forSelectConfig={forSelectConfig}
               onSubmit={onSubmit}
+              validatorModal={validatorModal}
             />
           </div>
         </Modal>
@@ -152,40 +156,47 @@ class TableContainer extends Component {
             <TableRow className={classes.rows}>
               <TableCell />
               {rows.map(label => (
-                <TableCell key={`label${label}`}>{label}</TableCell>
+                <TableCell key={`label${label}${Math.random()}`}>
+                  {label}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={classes.table}>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((n, i) => {
                 return (
-                  <TableRow hover key={i}>
+                  <TableRow hover key={i} width="auto">
                     <TableCell>
-                      <Tooltip title="Редактировать">
-                        <IconButton
-                          aria-label="Edit"
-                          onClick={e => this.handleOpenModal(e, n)}
-                        >
-                          <Icon />
-                        </IconButton>
-                      </Tooltip>
+                      {edit ? (
+                        <Tooltip title="Редактировать">
+                          <IconButton
+                            aria-label="Edit"
+                            onClick={e => this.handleOpenModal(e, n)}
+                          >
+                            <Icon />
+                          </IconButton>
+                        </Tooltip>
+                      ) : null}
                     </TableCell>
+
                     {Object.values(n).map((value, i) => (
-                      <TableCell key={i} align="left">
+                      <TableCell padding="dense" key={i} align="left">
                         {value}
                       </TableCell>
                     ))}
                     <TableCell>
-                      <Tooltip title="Удалить">
-                        <IconButton
-                          aria-label="Delete"
-                          onClick={() => handleDelete(n.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
+                      {deleteCheck ? (
+                        <Tooltip title="Удалить">
+                          <IconButton
+                            aria-label="Delete"
+                            onClick={() => handleDelete(n.id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      ) : null}
                     </TableCell>
                   </TableRow>
                 );

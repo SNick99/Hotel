@@ -1,4 +1,4 @@
-import { GET_ALL_EMPLOYEES, DELETE_EMPLOYEE } from '../actions/types';
+import * as actionsTypes from '../actions/types';
 
 const initialState = {
   employees: []
@@ -6,15 +6,24 @@ const initialState = {
 
 export default function employeesReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_ALL_EMPLOYEES:
+    case actionsTypes.GET_ALL_EMPLOYEES:
       return {
         ...state,
         employees: action.payload
       };
-    case DELETE_EMPLOYEE:
+    case actionsTypes.DELETE_EMPLOYEE:
       return {
         ...state,
         employees: action.payload
+      };
+    case actionsTypes.UPDATE_EMPLOYEE_SUCSSES:
+      return {
+        ...state,
+        employees: action.payload
+      };
+    case actionsTypes.UPDATE_EMPLOYEE_FAILER:
+      return {
+        ...state
       };
     default:
       return state;

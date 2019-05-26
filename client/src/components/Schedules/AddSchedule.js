@@ -38,7 +38,7 @@ class AddSchedule extends Component {
         headerForm={this.headerForm}
         submitLabel={this.submitLabel}
         validator={validatorSchedule}
-        forSelectConfig={this.props.employees}
+        forSelectConfig={{ Employee: this.props.employees }}
       />
     );
   }

@@ -8,22 +8,10 @@ let services = (sequelize, DataTypes) => {
       service: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Please enter your service",
-          },
-        },
       },
       price: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Please enter your price",
-          },
-
-          min: 1,
-        },
       },
     },
 

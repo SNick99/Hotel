@@ -204,8 +204,6 @@ router.put(
       .then(product => {
         product
           .update({
-            NameFirma: req.body.NameFirma,
-            NameOfProduct: req.body.NameOfProduct,
             PriceOfUnit: req.body.PriceOfUnit,
           })
           .then(() => {

@@ -41,7 +41,6 @@ const FormContainer = props => {
     validator,
     forSelectConfig
   } = props;
-  console.log(dataInput);
   return (
     <Paper className={classes.root}>
       <div className={classes.form}>

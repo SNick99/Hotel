@@ -2,6 +2,7 @@
 
 // parse selected row (rows after displaing by orderView)
 export const parseItem = (item, old) => {
+  console.log('SHEDULE', item);
   let cur = {
     DateChange: '',
     Employee: {}

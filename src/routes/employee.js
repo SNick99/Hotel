@@ -27,6 +27,11 @@ router.post("/addEmployee", (req, res) => {
     .then(user => {
       if (user) {
         errors.Phone = "Работник под таким номером уже существует";
+        console.log(`
+        #################################№№№№№№№№
+        Работник под таким номером уже существует
+        №№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№
+       `);
         return res.status(400).json(errors);
       } else {
         console.log("#####", req.body);
@@ -151,12 +156,6 @@ router.put(
   "/allEmployees/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = employeeUpdate(req.body);
-
-    //Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
     req.context.models.employee
       .findOne({ where: { id: req.params.id } })
       .then(employee => {
@@ -164,7 +163,6 @@ router.put(
           .update({
             FirstName: req.body.FirstName,
             LastName: req.body.LastName,
-            Birthday: req.body.Birthday,
             Adress: req.body.Adress,
             Position: req.body.Position,
             SalaryChange: req.body.SalaryChange,

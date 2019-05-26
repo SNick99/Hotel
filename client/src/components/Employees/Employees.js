@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   allEmployees,
-  deleteEmployee
+  deleteEmployee,
+  updateEmployee
 } from '../../redux/actions/employeesActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
-
+import { validatorEmployee } from '../../validation/validatorModals';
 const rows = [
   'id',
   'Имя',
@@ -21,18 +22,23 @@ const rows = [
 
 class Employees extends Component {
   state = {
-    selected: '',
+    idClient: '',
     data: this.props.employees.employees
   };
 
   handleEdit = (e, item) => {
     console.log(item); // delete after dev
-    this.setState({ selected: item });
+    this.setState({ idClient: item.id });
   };
 
   handleDelete = item => {
     console.log(`Удален сотрудник с id ${item}`);
     return this.props.deleteEmployee(item);
+  };
+
+  onSubmit = values => {
+    values.id = this.state.idClient;
+    this.props.updateEmployee(values);
   };
 
   componentDidMount() {
@@ -62,7 +68,39 @@ class Employees extends Component {
         searchProp="Phone"
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
-        modalInputs={inputs.employeeInputs}
+        modalInputs={[
+          {
+            type: 'text',
+            label: 'Имя',
+            name: 'FirstName',
+            helperText: ''
+          },
+          {
+            type: 'text',
+            label: 'Фамилия',
+            name: 'LastName',
+            helperText: ''
+          },
+          {
+            type: 'text',
+            label: 'Домашний адрес (Город, улица, дом, квартира)',
+            name: 'Adress'
+          },
+          {
+            type: 'text',
+            label: 'Должность сотрудника',
+            name: 'Position'
+          },
+          {
+            type: 'number',
+            label: 'Оклад сотрудника за одну смену',
+            name: 'SalaryChange'
+          }
+        ]}
+        onSubmit={this.onSubmit}
+        edit={true}
+        delete={false}
+        validatorModal={validatorEmployee}
       />
     );
   }
@@ -72,7 +110,8 @@ Employees.propTypes = {
   auth: PropTypes.object.isRequired,
   employees: PropTypes.object.isRequired,
   allEmployees: PropTypes.func.isRequired,
-  deleteEmployee: PropTypes.func.isRequired
+  deleteEmployee: PropTypes.func.isRequired,
+  updateEmployee: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -84,5 +123,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { allEmployees, deleteEmployee }
+  { allEmployees, deleteEmployee, updateEmployee }
 )(Employees);

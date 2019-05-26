@@ -1,47 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-/*import {
-  AllOrders,
-  deleteCage
-} from '../../redux/actions/ordersActions';*/
+import {
+  allOrders,
+  deleteOrder,
+  allForOrder
+} from '../../redux/actions/ordersActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
 
 import { orderView, parseItem } from './orderSelection';
 
-const test = [
-  {
-    EndDate: '2019-05-16',
-    FirstName: '111client',
-    LastName: '11lastname',
-    Phone: '111-11-11',
-    PetName: '111pet',
-    KindOfPet: '111kindofpet',
-    PassportCode: 'code111111',
-    EFirstName: '111emp',
-    ELastName: '111',
-    EPhone: '111',
-    NameOfProduct: '111productname',
-    ProductNameFirma: '111firmaproduct',
-    KindOfCage: '111cage',
-    NameFirma: '111firmacage',
-    Extra: '111extra',
-    ExtraPrice: '111extraprice'
-  }
-];
-
 const rows = [
+  'id',
   'Начало',
   'Завершение',
   'Имя клиента',
   'Телефон',
-  'Имя животного',
+  // 'Имя животного',
+  // 'Вид',
   'Имя смотрителя',
-  'Телефон',
-  'Фирма клетки',
-  'Модель',
-  'Фирма продукта',
+  // 'Телефон',
+  // 'Фирма клетки',
+  'Клетка',
+  // 'Фирма продукта',
   'Продукт',
   'Доп. сервис',
   'Сумма заказа'
@@ -50,7 +32,14 @@ const rows = [
 class AllOrders extends Component {
   state = {
     selected: '',
-    data: orderView(test) //this.props.orders
+    info: {
+      Employee: [],
+      Client: [],
+      Pet: [],
+      Product: [],
+      Cage: []
+    }
+    // data: orderView(test) //this.props.orders
   };
 
   handleEdit = (e, item, old) => {
@@ -61,46 +50,61 @@ class AllOrders extends Component {
   };
 
   handleDelete = item => {
-    //console.log(`Удален заказ с id ${item}`);
-    // return this.props.deleteCage(item);
+    console.log(`Удален заказ с id ${item}`);
+    return this.props.deleteOrder(item);
   };
 
   componentDidMount() {
-    // this.props.AllOrders();
+    this.props.allForOrder().then(() => {
+      this.setState({ info: this.props.info });
+      this.props.allOrders();
+    });
   }
 
   render() {
-    // console.log('Data', this.state.data);
-
     return (
-      <TableContainer
-        rows={rows}
-        searchProp="EndDate"
-        data={this.state.data}
-        allData={e => console.log('ex')} // AllOrders from actions
-        handleEdit={this.handleEdit}
-        handleDelete={this.handleDelete}
-        modalInputs={inputs.orderInputs}
-      />
+      <React.Fragment>
+        {this.state.info.Pet !== undefined &&
+        this.state.info.Client !== undefined &&
+        this.state.info.Employee !== undefined &&
+        this.state.info.Cage !== undefined &&
+        this.state.info.Product !== undefined ? (
+          <TableContainer
+            rows={rows}
+            searchProp="EndDate"
+            data={this.props.orders}
+            edit={false}
+            handleDelete={this.handleDelete}
+            delete={true}
+          />
+        ) : (
+          <div>
+            Ой! Кажется, что-то пошло не так, попробуйте обновить страницу.
+          </div>
+        )}
+      </React.Fragment>
     );
   }
 }
 
 AllOrders.propTypes = {
-  auth: PropTypes.object.isRequired
-  //orders: PropTypes.object.isRequired
-  //AllOrders: PropTypes.func.isRequired,
-  //deleteCage: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  orders: PropTypes.array.isRequired,
+  allOrders: PropTypes.func.isRequired,
+  deleteOrder: PropTypes.func.isRequired,
+  allForOrder: PropTypes.func.isRequired,
+  info: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    orders: state.orders
+    orders: state.orders.orders,
+    info: state.orders.info
   };
 };
 
 export default connect(
-  mapStateToProps
-  //{ AllOrders, deleteCage }
+  mapStateToProps,
+  { allOrders, deleteOrder, allForOrder }
 )(AllOrders);

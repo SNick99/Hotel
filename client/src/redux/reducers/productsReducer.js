@@ -23,6 +23,25 @@ export default function productsReducer(state = initialState, action) {
       return {
         ...state
       };
+    case actionType.UPDATE_PRODUCT_SUCSSES:
+      return {
+        ...state,
+        products: action.payload
+      };
+    case actionType.UPDATE_PRODUCT_FAILER:
+      return {
+        ...state
+      };
+    case actionType.DELETE_PRODUCTS_SUCSSES:
+      return {
+        ...state,
+        products: action.payload
+      };
+    case actionType.DELETE_PRODUCTS_FAILER:
+      return {
+        ...state
+      };
+
     default:
       return state;
   }

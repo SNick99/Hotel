@@ -17,6 +17,15 @@ export default function clientsReducer(state = initialState, action) {
         ...state,
         clients: action.payload
       };
+    case ActionTypes.UPDATE_CLIENT_SUCSSES:
+      return {
+        ...state,
+        clients: action.payload
+      };
+    case ActionTypes.UPDATE_CLIENT_FAILER:
+      return {
+        ...state
+      };
     default:
       return state;
   }

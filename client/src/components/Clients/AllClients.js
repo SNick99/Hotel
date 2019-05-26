@@ -1,30 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { allClients, deleteClient } from '../../redux/actions/clientsAction';
+import {
+  allClients,
+  deleteClient,
+  updateClient
+} from '../../redux/actions/clientsAction';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
-
-// let test = [
-//   {
-//     Имя: '111',
-//     Фамилия: '111',
-//     Phone: '111',
-//     'Дата рождения': '111',
-//     'Имя питомца': '111',
-//     Вид: '111',
-//     Код: '111'
-//   },
-//   {
-//     Имя: '222',
-//     Фамилия: '222',
-//     Phone: '222',
-//     'Дата рождения': '222',
-//     'Имя питомца': '222',
-//     Вид: '222',
-//     Код: '222'
-//   }
-// ];
 
 const rows = [
   'id',
@@ -39,18 +22,23 @@ const rows = [
 
 class AllClients extends Component {
   state = {
-    selected: '',
+    idClient: '',
     data: this.props.clients.clients
   };
 
   handleEdit = (e, item) => {
     console.log(item); // delete after dev
-    this.setState({ selected: item });
+    this.setState({ idClient: item });
   };
 
   handleDelete = item => {
     console.log(`Удален клиент с id ${item}`);
     return this.props.deleteClient(item);
+  };
+
+  onSubmit = values => {
+    values.id = this.state.idClient.id;
+    this.props.updateClient(values);
   };
 
   componentDidMount() {
@@ -65,7 +53,23 @@ class AllClients extends Component {
         data={this.props.clients.clients}
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
-        modalInputs={inputs.clientInputs}
+        modalInputs={[
+          {
+            type: 'text',
+            label: 'Имя',
+            name: 'FirstName',
+            helperText: ''
+          },
+          {
+            type: 'text',
+            label: 'Фамилия',
+            name: 'LastName',
+            helperText: ''
+          }
+        ]}
+        onSubmit={this.onSubmit}
+        edit={true}
+        delete={false}
       />
     );
   }
@@ -75,7 +79,8 @@ AllClients.propTypes = {
   auth: PropTypes.object.isRequired,
   clients: PropTypes.object.isRequired,
   allClients: PropTypes.func.isRequired,
-  deleteClient: PropTypes.func.isRequired
+  deleteClient: PropTypes.func.isRequired,
+  updateClient: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -87,5 +92,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { allClients, deleteClient }
+  { allClients, deleteClient, updateClient }
 )(AllClients);

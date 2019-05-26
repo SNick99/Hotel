@@ -9,6 +9,7 @@ import {
 } from '../../redux/actions/schedulesActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
+import { validatorSchedule } from '../../validation/validatorModals';
 
 import { parseItem } from './scheduleSelection';
 
@@ -17,14 +18,12 @@ const rows = ['id', 'Имя', 'Фамилия', 'Телефон', 'Дата см
 class AllSchedules extends Component {
   state = {
     selected: '',
-    data: this.props.schedules
+    data: this.props.schedules,
+    employees: []
   };
 
   handleEdit = (e, item, old) => {
-    console.log(item); // to-parse input data
-    const changed = parseItem(item, old);
-    console.log(changed); // after-parse data
-    this.setState({ selected: changed });
+    this.setState({ selected: item.id });
   };
 
   handleDelete = item => {
@@ -33,15 +32,16 @@ class AllSchedules extends Component {
   };
   onSubmit = values => {
     const sendData = {
-      DateChange: values.DateChange,
-      employeeId: values.Employee[0]
+      id: this.state.selected,
+      DateChange: values.DateChange
     };
-
     this.props.updateSchedule(sendData);
   };
   componentDidMount() {
     this.props.allSchedules();
-    this.props.allEmployeeSchedules();
+    this.props.allEmployeeSchedules().then(() => {
+      this.setState({ employees: this.props.employees });
+    });
   }
 
   render() {
@@ -54,9 +54,19 @@ class AllSchedules extends Component {
         data={this.props.schedules}
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
-        modalInputs={inputs.scheduleInputs}
-        forSelectConfig={this.props.employees}
+        modalInputs={[
+          {
+            type: 'date',
+            label: 'Дата смены',
+
+            name: 'DateChange'
+          }
+        ]}
+        forSelectConfig={{ Employee: this.state.employees }}
         onSubmit={this.onSubmit}
+        validatorModal={validatorSchedule}
+        edit={true}
+        delete={true}
       />
     );
   }

@@ -35,14 +35,35 @@ export const addProduct = data => dispatch => {
     );
 };
 
-// export const deleteCage = data => dispatch => {
-//   axios
-//     .delete(`/cage/allCages/${data}`, data)
-//     .then(res =>
-//       dispatch({
-//         type: actionType.DELETE_CAGE,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err => console.log(err));
-// };
+export const deleteProduct = data => dispatch => {
+  axios
+    .delete(`/product/allProducts/${data}`, data)
+    .then(res =>
+      dispatch({
+        type: actionType.DELETE_PRODUCTS_SUCSSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionType.DELETE_PRODUCTS_FAILER
+      })
+    );
+};
+
+export const updateProduct = data => dispatch => {
+  console.log(data);
+  axios
+    .put(`/product/allProducts/${data.id}`, data)
+    .then(res =>
+      dispatch({
+        type: actionType.UPDATE_PRODUCT_SUCSSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionType.UPDATE_PRODUCT_FAILER
+      })
+    );
+};

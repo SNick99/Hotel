@@ -9,8 +9,16 @@ let product_order = (sequelize, DataTypes) => {
   );
 
   Product_order.associate = models => {
-    Product_order.belongsTo(models.order, { onDelete: "SET NULL" });
-    Product_order.belongsTo(models.product, { onDelete: "SET NULL" });
+    Product_order.belongsTo(
+      models.order,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
+    Product_order.belongsTo(
+      models.product,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
   };
 
   return Product_order;

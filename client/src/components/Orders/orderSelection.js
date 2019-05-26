@@ -27,15 +27,16 @@ export const orderView = arr => {
 
 // parse selected row (rows after displaing by orderView)
 export const parseItem = (item, old) => {
+  console.log('kkkkk', item);
   let cur = {
     EndDate: '',
-    Client: {},
-    Pet: {},
-    Employee: {},
-    Product: {},
-    Cage: {},
-    Extra: '',
-    ExtraPrice: ''
+    Employee: [],
+    Client: [],
+    Pet: [],
+    Product: [],
+    Cage: [],
+    service: '',
+    price: ''
   };
   cur['EndDate'] = item['EndDate'] ? item['EndDate'] : old['EndDate'];
   [

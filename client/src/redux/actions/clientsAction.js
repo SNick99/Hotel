@@ -31,3 +31,19 @@ export const deleteClient = data => dispatch => {
     )
     .catch(err => console.log(err));
 };
+
+export const updateClient = data => dispatch => {
+  axios
+    .put(`/client/allClients/${data.id}`, data)
+    .then(res =>
+      dispatch({
+        type: actionType.UPDATE_CLIENT_SUCSSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionType.UPDATE_CLIENT_FAILER
+      })
+    );
+};

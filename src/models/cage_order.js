@@ -9,8 +9,16 @@ let cage_order = (sequelize, DataTypes) => {
   );
 
   Cage_order.associate = models => {
-    Cage_order.belongsTo(models.order, { onDelete: "SET NULL" });
-    Cage_order.belongsTo(models.cage, { onDelete: "SET NULL" });
+    Cage_order.belongsTo(
+      models.order,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
+    Cage_order.belongsTo(
+      models.cage,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
   };
 
   return Cage_order;

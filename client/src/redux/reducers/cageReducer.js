@@ -20,6 +20,16 @@ export default function cageReducer(state = initialState, action) {
         ...state,
         cages: action.payload
       };
+    case actionType.UPDATE_CAGE_SUCSSES:
+      return {
+        ...state,
+        cages: action.payload
+      };
+    case actionType.UPDATE_CAGE_FAILER:
+      return {
+        ...state,
+        cages: action.payload
+      };
     default:
       return state;
   }

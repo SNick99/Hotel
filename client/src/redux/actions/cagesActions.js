@@ -38,3 +38,21 @@ export const deleteCage = data => dispatch => {
     )
     .catch(err => console.log(err));
 };
+
+export const updateCage = data => dispatch => {
+  console.log(data);
+  axios
+    .put(`/cage/allCages/${data.id}`, data)
+    .then(res =>
+      dispatch({
+        type: actionType.UPDATE_CAGE_SUCSSES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionType.UPDATE_CAGE_FAILER,
+        payload: err.response.data
+      })
+    );
+};

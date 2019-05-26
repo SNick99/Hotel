@@ -34,7 +34,11 @@ let invoiceCage_cage = (sequelize, DataTypes) => {
 
   InvoiceCage_cage.associate = models => {
     InvoiceCage_cage.belongsTo(models.invoiceCage);
-    InvoiceCage_cage.belongsTo(models.cage, { onDelete: "SET NULL" });
+    InvoiceCage_cage.belongsTo(
+      models.cage,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
   };
 
   return InvoiceCage_cage;

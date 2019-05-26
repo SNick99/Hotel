@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { allCages, deleteCage } from '../../redux/actions/cagesActions';
+import {
+  allCages,
+  deleteCage,
+  updateCage
+} from '../../redux/actions/cagesActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
+import { validatorCage } from '../../validation/validatorModals';
 
-const rows = ['id', 'Фирма', 'Вид', 'Тип', 'Цена', 'Количество'];
+const rows = ['id', 'Фирма', 'Модель', 'Тип', 'Цена', 'Количество'];
 
 class AllCages extends Component {
   state = {
-    selected: '',
+    idCage: '',
     data: this.props.cages
   };
 
   handleEdit = (e, item) => {
-    console.log(item); // delete after dev
-    this.setState({ selected: item });
+    this.setState({ idCage: item.id });
+  };
+
+  onSubmit = values => {
+    values.id = this.state.idCage;
+    this.props.updateCage(values);
   };
 
   handleDelete = item => {
@@ -48,7 +57,13 @@ class AllCages extends Component {
         searchProp="NameFirma"
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
-        modalInputs={inputs.cageInputs}
+        modalInputs={[
+          { type: 'number', name: 'PriceOfDay', label: 'Стоимость/сутки' }
+        ]}
+        onSubmit={this.onSubmit}
+        edit={true}
+        delete={false}
+        validatorModal={validatorCage}
       />
     );
   }
@@ -59,7 +74,8 @@ allCages.propTypes = {
 
   cages: PropTypes.object.isRequired,
   allCages: PropTypes.func.isRequired,
-  deleteCage: PropTypes.func.isRequired
+  deleteCage: PropTypes.func.isRequired,
+  updateCage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -71,5 +87,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { allCages, deleteCage }
+  { allCages, deleteCage, updateCage }
 )(AllCages);

@@ -38,14 +38,14 @@ class Login extends Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/employee/current');
+      this.props.history.push('/');
     }
   }
 
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
     if (this.props.auth.isAuthenticated !== prevProps.auth.isAuthenticated) {
-      this.props.history.push('/employee/current');
+      this.props.history.push('/');
     }
   }
 

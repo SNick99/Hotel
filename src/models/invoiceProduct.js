@@ -19,9 +19,11 @@ let invoiceProduct = (sequelize, DataTypes) => {
   );
 
   InvoiceProduct.associate = models => {
-    InvoiceProduct.belongsTo(models.employee, {
-      onDelete: "SET NULL",
-    });
+    InvoiceProduct.belongsTo(
+      models.employee,
+      { defaultValue: 1 },
+      { onDelete: "SET DEFAULT" }
+    );
     InvoiceProduct.hasMany(models.invoiceProduct_product);
   };
 

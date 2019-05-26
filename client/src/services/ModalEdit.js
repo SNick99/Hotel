@@ -34,14 +34,17 @@ class ModalEdit extends React.Component {
       classes,
       onSubmit,
       dataInput,
-      forSelectConfig
+      forSelectConfig,
+      validatorModal
     } = this.props;
     console.log(selected);
+
     return (
       <div className={classes.form}>
         <br />
         <Form
           onSubmit={onSubmit}
+          validate={validatorModal}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={8}>

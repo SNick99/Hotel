@@ -31,7 +31,12 @@ router.post(
             .findOne({ where: { PassportCode: req.body.PassportCode } })
             .then(pet => {
               if (pet) {
-                res.send("Клиент и животное уже есть в базе");
+                res.status(500).send("Клиент и животное уже есть в базе");
+                console.log(`
+           #################################
+           Клиент и животное уже есть в базе
+           №№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№№
+          `);
               } else {
                 return Promise.all([
                   req.context.models.client
@@ -219,8 +224,6 @@ router.put(
           .update({
             FirstName: req.body.FirstName,
             LastName: req.body.LastName,
-            Birthday: req.body.Birthday,
-            Phone: req.body.Phone,
           })
           .then(() => {
             return req.context.models.client

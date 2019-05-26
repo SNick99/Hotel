@@ -29,10 +29,11 @@ const data4 = pets;
 const data5 = products; //-------------------delete after dev
 
 const selectConfig = (item, data) => {
+  console.log('XERRRRR', data);
   let result = '';
   switch (item.name) {
     case 'Employee':
-      result = data.map(
+      result = data.Employee.map(
         item =>
           `${item.id}\u00A0${item.FirstName}\u00A0${item.LastName}\u00A0${
             item.Phone
@@ -40,25 +41,29 @@ const selectConfig = (item, data) => {
       );
       break;
     case 'Cage':
-      result = data2.map(
+      result = data.Cage.map(
         item =>
-          `${item.KindOfCage}\u00A0${item.NameFirma}\u00A0${item.TypeOfCage}`
+          `${item.id}\u00A0${item.KindOfCage}\u00A0${item.NameFirma}\u00A0${
+            item.TypeOfCage
+          }`
       );
       break;
     case 'Client':
-      result = data3.map(
-        item => `${item.FirstName}\u00A0${item.LastName}\u00A0${item.Phone}`
+      result = data.Client.map(
+        item =>
+          `${item.id}\u00A0${item.FirstName}\u00A0${item.LastName}\u00A0${
+            item.Phone
+          }`
       );
       break;
     case 'Pet':
-      result = data4.map(
-        item =>
-          `${item.PetName}\u00A0${item.KindOfPet}\u00A0${item.PassportCode}`
+      result = data.Pet.map(
+        item => `${item.id}\u00A0${item.NamePet}\u00A0${item.PassportCode}`
       );
       break;
     case 'Product':
-      result = data5.map(
-        item => `${item.NameOfProduct}\u00A0${item.NameFirma}`
+      result = data.Product.map(
+        item => `${item.id}\u00A0${item.NameOfProduct}\u00A0${item.NameFirma}`
       );
       break;
   }

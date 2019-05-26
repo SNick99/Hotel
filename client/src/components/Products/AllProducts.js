@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { allProducts } from '../../redux/actions/productsActions';
+import {
+  allProducts,
+  updateProduct,
+  deleteProduct
+} from '../../redux/actions/productsActions';
 import TableContainer from '../../services/TableContainer';
 import { inputs } from '../../services/dataInputs';
-
-const rows = ['id', 'Фирма', 'Название', 'Стоимость (продажа)', 'Количество'];
+import { validatorProduct } from '../../validation/validatorModals';
+const rows = ['id', 'Фирма', 'Название', 'Цена', 'Количество'];
 
 class AllProducts extends Component {
   state = {
-    selected: '',
+    idProduct: '',
     data: this.props.products
   };
 
   handleEdit = (e, item) => {
-    console.log(item); // delete after dev
-    this.setState({ selected: item });
+    this.setState({ idProduct: item.id });
   };
 
   handleDelete = item => {
     console.log(`Удален клиент с id ${item}`);
-    // return this.props.deleteClient(item);
+    this.props.deleteProduct(item);
   };
-
+  onSubmit = values => {
+    values.id = this.state.idProduct;
+    this.props.updateProduct(values);
+  };
   componentDidMount() {
     this.props.allProducts();
   }
@@ -47,7 +53,13 @@ class AllProducts extends Component {
         data={sendData}
         handleEdit={this.handleEdit}
         handleDelete={this.handleDelete}
-        modalInputs={inputs.productInputs}
+        modalInputs={[
+          { type: 'number', name: 'PriceOfUnit', label: 'Продажа' }
+        ]}
+        onSubmit={this.onSubmit}
+        edit={true}
+        delete={false}
+        validatorModal={validatorProduct}
       />
     );
   }
@@ -56,8 +68,9 @@ class AllProducts extends Component {
 AllProducts.propTypes = {
   auth: PropTypes.object.isRequired,
   products: PropTypes.object.isRequired,
-  allProducts: PropTypes.func.isRequired
-  //deleteClient: PropTypes.func.isRequired,
+  allProducts: PropTypes.func.isRequired,
+  updateProduct: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -69,5 +82,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { allProducts }
+  { allProducts, updateProduct, deleteProduct }
 )(AllProducts);

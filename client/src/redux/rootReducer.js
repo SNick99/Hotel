@@ -12,11 +12,14 @@ import productsReducer from './reducers/productsReducer';
 
 import schedulesReducer from './reducers/schedulesReducer';
 
+import ordersReducer from './reducers/orderReducer';
+
 export default combineReducers({
   auth: authReducer,
   employees: employeesReducer,
   cages: cageReducer,
   clients: clientsReducer,
   products: productsReducer,
-  schedules: schedulesReducer
+  schedules: schedulesReducer,
+  orders: ordersReducer
 });
